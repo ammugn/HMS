@@ -5,6 +5,8 @@ import lombok.experimental.FieldDefaults;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
+
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -12,7 +14,7 @@ import javax.persistence.Id;
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Users {
-    @Id
+    @Id //primary key
     long userId;
     @NonNull
     String username;

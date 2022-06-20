@@ -12,7 +12,7 @@
 	<artifactId>hms</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>hms</name>
-	<description>Capstone project using Spring Boot</description>
+	<description>Capstone project for Perscholas-TEK using Spring Boot</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
