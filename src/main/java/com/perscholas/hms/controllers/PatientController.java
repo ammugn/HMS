@@ -37,7 +37,7 @@ public class PatientController {
         model.addAttribute("patients", patientService.findAll());
         return "patients";
     }
-    @GetMapping("/addNewPatient")
+    @GetMapping("/patients/addNewPatient")
     public String addNewPatient(Model model) {
         Patient newPatient = new Patient();
         model.addAttribute("patient", newPatient);
@@ -46,14 +46,14 @@ public class PatientController {
         log.info("New Patient addition");
         return "add-patient";
     }
-    @PostMapping("/saveorupdatepatient")
+    @PostMapping("/patients/saveorupdatepatient")
     public String saveUpdatePatient(RedirectAttributes model, @ModelAttribute("patient") Patient patient){
         patientService.saveOrUpdate(patient);
         log.info("New Patient added successfully");
         return "redirect:/patients";
 
     }
-    @GetMapping("/edit/{id}")
+    @GetMapping("/patients/edit/{id}")
     public String showUpdateForm(@PathVariable("id") long id, Model model) {
         Patient patient = patientService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid patient Id:" + id));
@@ -63,21 +63,21 @@ public class PatientController {
         model.addAttribute("listInsurance", listInsurance);
         return "add-patient";
     }
-    @PostMapping("/update/{id}")
+    @PostMapping("/patients/update/{id}")
     public String updateUser(@PathVariable("id") long id,
                              BindingResult result, Model model) {
         Patient patient = patientService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid patient Id:" + id));
         if (result.hasErrors()) {
             patient.setId(id);
-            return "update-user";
+            return "add-patient";
         }
 
         patientService.saveOrUpdate(patient);
         return "redirect:/patients";
     }
 
-    @GetMapping("/delete/{id}")
+    @GetMapping("/patients/delete/{id}")
     public String deletePatient(@PathVariable("id") long id, Model model) {
         Patient patient = patientService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid patient Id:" + id));

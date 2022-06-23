@@ -19,10 +19,10 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@SequenceGenerator(name="seq", initialValue=200)
+@SequenceGenerator(name="pseq", initialValue=200)
 public class Patient {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator="seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator="pseq")
     //@GeneratedValue(strategy = GenerationType.AUTO)
     long id;
     @NonNull

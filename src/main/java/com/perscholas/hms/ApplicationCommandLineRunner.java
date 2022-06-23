@@ -1,5 +1,6 @@
 package com.perscholas.hms;
 
+import com.perscholas.hms.models.Doctor;
 import com.perscholas.hms.models.Patient;
 import com.perscholas.hms.services.AppointmentService;
 import com.perscholas.hms.services.DoctorService;
@@ -42,6 +43,9 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
         patientService.saveOrUpdate(new Patient("Emma","Morgan","emma@gmail.com", "1999-05-20","Cigna","Bellevue,WA"));
        patientService.saveOrUpdate(new Patient("John","Doe","john@gmail.com", "1999-08-25","UnitedHealth","Bellevue,WA"));
 
+        doctorService.saveOrUpdate(new Doctor("Gregory","House","ghouse@gmail.com","Primary Physician"));
+        doctorService.saveOrUpdate(new Doctor("Meredith","Grey","mgrey@gmail.com","Cardiologist"));
+        doctorService.saveOrUpdate(new Doctor("Richard","Webber","rwebber@gmail.com","Primary Physician"));
     }
 }
 

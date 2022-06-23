@@ -9,9 +9,9 @@
 </head>
 
 <body>
+<img src="/images/meditechlogo2.png" style="width:100px;height:100px">
         <div class="container">
-
-                <h1>Patient List</h1>
+                <h1>Patient List</h1><br><br>
                 <table class="table table-bordered table-striped" id="patient">
                     <thead>
                     <tr>
@@ -33,15 +33,15 @@
                         <td th:text="${patient.insurance}"></td>
                         <td th:text="${patient.address}"></td>
                         <td>
-                            <a th:href="@{/edit/{id}(id=${patient.id})}" class="btn btn-info">Update</a>
-                            <a th:href="@{/delete/{id}(id=${patient.id})}" class="btn btn-danger ml-2">Delete</a>
+                            <a th:href="@{/patients/edit/{id}(id=${patient.id})}" class="btn btn-info">Update</a>
+                            <a th:href="@{/patients/delete/{id}(id=${patient.id})}" class="btn btn-danger ml-2">Delete</a>
 
                         </td>
                     </tr>
 
                     </tbody>
                 </table>
-            <a th:href="@{/addNewPatient}" class="btn btn-primary">Add Patient</a>
+            <a th:href="@{/patients/addNewPatient}" class="btn btn-primary">Add Patient</a>
             <br/><br/>
             </div>
 <!--

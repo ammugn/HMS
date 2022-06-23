@@ -16,8 +16,10 @@ import java.util.*;
 @RequiredArgsConstructor
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@SequenceGenerator(name="dseq", initialValue=100)
 public class Doctor {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator="dseq")
     Long id;
     @NonNull
     String firstName;
