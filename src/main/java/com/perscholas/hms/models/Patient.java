@@ -5,9 +5,7 @@ import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * @author Ammu Nair
@@ -38,19 +36,20 @@ public class Patient {
     @NonNull
     String address;
 
-   /* @ToString.Exclude
-    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    List<Appointment> appointmentList=new java.util.ArrayList<>();
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Appointment> appointments = new LinkedHashSet<>();
+
 
     public void addAppointment(Appointment a){
-        appointmentList.add(a);
+        appointments.add(a);
+        a.setPatient(this);
 
     }
     public void removeAppointment(Appointment a){
-        appointmentList.remove(a);
+        appointments.remove(a);
         a.setPatient(null);
     }
-
+/*
     @ToString.Exclude
     @ManyToMany(mappedBy = "patientList", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.EAGER)
     List<Doctor> doctorsList = new ArrayList<>();
@@ -60,6 +59,8 @@ public class Patient {
         doctor.getPatientList().add(this);
     }
 */
+
+
     @Override
     public String toString() {
         return "Patient{" +

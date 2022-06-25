@@ -1,6 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
 
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -58,10 +57,10 @@
                         <li><a href="chart-knob.html">Knob</a></li>
                     </ul>
                 </li>-->
-                <li><a href="app-event-calender.html"><i class="ti-calendar"></i> Calender </a></li>
-                <li><a href="app-email.html"><i class="ti-email"></i> Email</a></li>
-                <li><a href="app-profile.html"><i class="ti-user"></i> Profile</a></li>
-                <li><a href="app-widget-card.html"><i class="ti-layout-grid2-alt"></i> Widget</a></li>
+                <li><a href="#"><i class="ti-calendar"></i> Calender </a></li>
+                <li><a href="#"><i class="ti-email"></i> Email</a></li>
+                <li><a th:href="@{/patients}"><i class="ti-user"></i> Patients</a></li>
+                <li><a th:href="@{/doctors}"><i class="ti-user"></i> Doctors</a></li>
                 <li class="label">Features</li>
                <!-- <li><a class="sidebar-sub-toggle"><i class="ti-layout"></i> UI Elements <span
                         class="sidebar-collapse-icon ti-angle-down"></span></a>

@@ -41,4 +41,8 @@ public class PatientService {
     public void delete(Patient patient) {
        patientRepository.delete(patient);
     }
+
+
+
+
 }

@@ -4,7 +4,9 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.time.LocalDate;
 
 /**
  * @author Ammu Nair
@@ -21,17 +23,20 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     Long id;
-    @NonNull
-    Long patientId;
-    @NonNull
-    Long doctorId;
-
     String diagnosis;
     @NonNull
-    DateFormat dateOfAppointment;
+    LocalDate appointmentDate;
+    @NonNull
+    LocalDate appointmentTime;
+    @NonNull
+    boolean isComplete;
+    @NonNull
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    @JoinColumn(name = "patient_id")
+    private Patient patient;
 
-
-
-
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    @JoinColumn(name = "doctor_id")
+    private Doctor doctor;
 
 }

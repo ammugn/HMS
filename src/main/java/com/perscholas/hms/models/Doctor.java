@@ -30,19 +30,16 @@ public class Doctor {
     @NonNull
     String department;
 
-
-
-   /* @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.EAGER)
-    @JoinTable(name = "doctor_patients",
-            joinColumns = @JoinColumn(name = "doctor_id"),
-            inverseJoinColumns = @JoinColumn(name = "patient_id"))
-    List<Patient> patientList = new ArrayList<>();
-
-    // Helper Method
-    public void addPatients(Patient patient){
-        patientList.add(patient);
-        patient.getDoctorsList().add(this);
-    }*/
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<Appointment> appointments = new LinkedHashSet<>();
+    public void addAppointments(Appointment a){
+        appointments.add(a);
+        a.setDoctor(this);
+    }
+    public void removeAppointment(Appointment a){
+        appointments.remove(a);
+        a.setDoctor(null);
+    }
 
     @Override
     public boolean equals(Object o) {
