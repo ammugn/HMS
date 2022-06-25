@@ -1,5 +1,6 @@
 package com.perscholas.hms;
 
+import com.perscholas.hms.models.Appointment;
 import com.perscholas.hms.models.Doctor;
 import com.perscholas.hms.models.Patient;
 import com.perscholas.hms.services.AppointmentService;
@@ -39,13 +40,18 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
     }
     @Override
     public void run(String... args) throws Exception {
+
+    //Populating Patient data
         patientService.saveOrUpdate(new Patient("Ammu","Nair","ammugn@gmail.com", "1988-12-05","Aetna","Mill Creek,WA"));
         patientService.saveOrUpdate(new Patient("Emma","Morgan","emma@gmail.com", "1999-05-20","Cigna","Bellevue,WA"));
-       patientService.saveOrUpdate(new Patient("John","Doe","john@gmail.com", "1999-08-25","UnitedHealth","Bellevue,WA"));
-
+        patientService.saveOrUpdate(new Patient("John","Doe","john@gmail.com", "1999-08-25","UnitedHealth","Bellevue,WA"));
+     //Populating Doctor data
         doctorService.saveOrUpdate(new Doctor("Gregory","House","ghouse@gmail.com","Primary Physician"));
         doctorService.saveOrUpdate(new Doctor("Meredith","Grey","mgrey@gmail.com","Cardiologist"));
         doctorService.saveOrUpdate(new Doctor("Richard","Webber","rwebber@gmail.com","Primary Physician"));
+        //Populating Appointment data
+        appointmentService.saveOrUpdate(new Appointment("Ammu Nair","Gregory House","fever","flu","2022-23-06","10",true));
+
     }
 }
 

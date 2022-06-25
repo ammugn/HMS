@@ -20,17 +20,23 @@ import java.time.LocalDate;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Appointment {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+    @NonNull
+    String patientName;
+    @NonNull
+    String doctorName;
+    @NonNull
+    String issue;
+    @NonNull
     String diagnosis;
     @NonNull
-    LocalDate appointmentDate;
+    String appointmentDate;
     @NonNull
-    LocalDate appointmentTime;
+    String appointmentTime;
     @NonNull
     boolean isComplete;
-    @NonNull
+
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "patient_id")
     private Patient patient;
@@ -38,5 +44,6 @@ public class Appointment {
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "doctor_id")
     private Doctor doctor;
+
 
 }

@@ -1,11 +1,16 @@
 package com.perscholas.hms.services;
 
 import com.perscholas.hms.data.AppointmentRepository;
+import com.perscholas.hms.models.Appointment;
+import com.perscholas.hms.models.Patient;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Ammu Nair
@@ -19,4 +24,33 @@ public class AppointmentService {
     public AppointmentService(AppointmentRepository appointmentRepository) {
         this.appointmentRepository = appointmentRepository;
     }
+
+
+    public List<Appointment> findAll(){
+        return appointmentRepository.findAll();
+    }
+
+    public void saveOrUpdate(Appointment a){
+        log.info(a.toString());
+        appointmentRepository.save(a);
+
+    }
+    public Optional<Appointment> findById(long id)
+    {
+        return appointmentRepository.findById(id);
+    }
+
+    public void delete(Appointment a) {
+        appointmentRepository.delete(a);
+
+    }
+
+/*    public List<Appointment> getPatientAppointments(String name){
+
+        return appointmentRepository.findPatientAppointments(name);
+    }*/
+    /*public List<Appointment> getDoctorAppointments(String name){
+
+        return appointmentRepository.findDoctorAppointments(name);
+    }*/
 }

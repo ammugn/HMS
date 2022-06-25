@@ -31,7 +31,7 @@ DoctorService doctorService;
         this.doctorService = doctorService;
     }
 
-    @GetMapping("/doctors")
+   /* @GetMapping("/doctors")
     public String getAllDoctors(Model model) {
         log.info("Doctor list displayed");
         model.addAttribute("doctors", doctorService.findAll());
@@ -83,5 +83,5 @@ DoctorService doctorService;
                 .orElseThrow(() -> new IllegalArgumentException("Invalid doctor Id:" + id));
         doctorService.delete(doctor);
         return "redirect:/doctors";
-    }
+    }*/
 }

@@ -1,10 +1,211 @@
 package com.perscholas.hms.controllers;
 
+import com.perscholas.hms.models.Appointment;
+import com.perscholas.hms.models.Doctor;
+import com.perscholas.hms.models.Patient;
+import com.perscholas.hms.services.AppointmentService;
+import com.perscholas.hms.services.DoctorService;
+import com.perscholas.hms.services.PatientService;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Ammu Nair
  */
 @Controller
+@Slf4j
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@RequestMapping
 public class AdminController {
+
+    PatientService patientService;
+    DoctorService doctorService;
+    AppointmentService appointmentService;
+    @Autowired
+    public AdminController(PatientService patientService, DoctorService doctorService, AppointmentService appointmentService) {
+        this.patientService = patientService;
+        this.doctorService = doctorService;
+        this.appointmentService = appointmentService;
+    }
+
+    @GetMapping("/patients")
+    public String getAllPatients(Model model) {
+        log.info("Patient list displayed");
+        model.addAttribute("patients", patientService.findAll());
+        return "patients";
+    }
+    @GetMapping("/patients/addNewPatient")
+    public String addNewPatient(Model model) {
+        Patient newPatient = new Patient();
+        model.addAttribute("patient", newPatient);
+        List<String> listInsurance = Arrays.asList("Optum", "UnitedHealthCare", "Aetna","Cigna");
+        model.addAttribute("listInsurance", listInsurance);
+        log.info("New Patient addition");
+        return "add-patient";
+    }
+    @PostMapping("/patients/saveorupdatepatient")
+    public String saveUpdatePatient(RedirectAttributes model, @ModelAttribute("patient") Patient patient){
+        patientService.saveOrUpdate(patient);
+        log.info("New Patient added successfully");
+        return "redirect:/patients";
+
+    }
+    @GetMapping("/patients/edit/{id}")
+    public String showUpdateForm(@PathVariable("id") long id, Model model) {
+        Patient patient = patientService.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid patient Id:" + id));
+
+        model.addAttribute("patient", patient);
+        List<String> listInsurance = Arrays.asList("Optum", "UnitedHealthCare", "Aetna","Cigna");
+        model.addAttribute("listInsurance", listInsurance);
+        return "add-patient";
+    }
+    @PostMapping("/patients/update/{id}")
+    public String updateUser(@PathVariable("id") long id,
+                             BindingResult result, Model model) {
+        Patient patient = patientService.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid patient Id:" + id));
+        if (result.hasErrors()) {
+            patient.setId(id);
+            return "add-patient";
+        }
+
+        patientService.saveOrUpdate(patient);
+        return "redirect:/patients";
+    }
+
+    @GetMapping("/patients/delete/{id}")
+    public String deletePatient(@PathVariable("id") long id, Model model) {
+        Patient patient = patientService.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid patient Id:" + id));
+        patientService.delete(patient);
+        return "redirect:/patients";
+    }
+
+
+    /***** Admin controllers for Doctors *******/
+    @GetMapping("/doctors")
+    public String getAllDoctors(Model model) {
+        log.info("Doctor list displayed");
+        model.addAttribute("doctors", doctorService.findAll());
+        return "doctors";
+    }
+    @GetMapping("/doctors/addNewDoctor")
+    public String addNewDoctor(Model model) {
+        Doctor doctor = new Doctor();
+        model.addAttribute("doctor", doctor);
+        List<String> listDepartments = Arrays.asList("Primary Physician", "Cardiology", "Orthopedic","Pediatric");
+        model.addAttribute("listDepartments", listDepartments);
+        log.info("New Doctor addition");
+        return "add-doctor";
+    }
+    @PostMapping("/doctors/saveorupdatedoctor")
+    public String saveUpdateDoctor(RedirectAttributes model, @ModelAttribute("doctor") Doctor doctor){
+        doctorService.saveOrUpdate(doctor);
+        log.info("New Doctor added successfully");
+        return "redirect:/doctors";
+    }
+
+    @GetMapping("/doctors/edit/{id}")
+    public String showUpdateDoctorForm(@PathVariable("id") long id, Model model) {
+        Doctor doctor = doctorService.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid doctor Id:" + id));
+
+        model.addAttribute("doctor", doctor);
+        List<String> listDepartments = Arrays.asList("Primary Physician", "Cardiology", "Orthopedic","Pediatric");
+        model.addAttribute("listDepartments", listDepartments);
+        log.info("in showUpdateDoctorForm ()");
+        return "add-doctor";
+    }
+/*    @PostMapping("/doctors/update/{id}")
+    public String updateDoctor(@PathVariable("id") long id,
+                               BindingResult result, Model model) {
+        Doctor doctor = doctorService.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid doctor Id:" + id));
+        if (result.hasErrors()) {
+            doctor.setId(id);
+            return "add-doctor";
+        }
+
+        doctorService.saveOrUpdate(doctor);
+        log.info("in updateDoctor()");
+        return "redirect:/doctors";
+    }*/
+
+    @GetMapping("/doctors/delete/{id}")
+    public String deleteDoctor(@PathVariable("id") long id, Model model) {
+        Doctor doctor = doctorService.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid doctor Id:" + id));
+        doctorService.delete(doctor);
+        return "redirect:/doctors";
+    }
+
+
+    /*****Admin controllers for Appointments*******/
+
+    @GetMapping("/appointments")
+    public String getAllAppointments(Model model) {
+        log.info("Appointment list displayed");
+        model.addAttribute("appointments", appointmentService.findAll());
+        return "appointments";
+    }
+    @GetMapping("/appointments/addNewAppointment")
+    public String addNewAppointment(Model model) {
+        Appointment appointment = new Appointment();
+        model.addAttribute("appointments", appointment);
+
+        List<Doctor> listDoctors = doctorService.findAll();
+        model.addAttribute("doctors", listDoctors);
+        log.info("New Appointment addition");
+        return "add-appointments";
+    }
+    @PostMapping("/appointments/saveorupdateappointment")
+    public String saveUpdateAppointment(RedirectAttributes model, @ModelAttribute("appointments") Appointment appointment){
+        appointmentService.saveOrUpdate(appointment);
+        log.info("New Appointment added successfully");
+        return "redirect:/appointments";
+
+    }
+
+    @GetMapping("/appointments/edit/{id}")
+    public String showUpdateAppointmentForm(@PathVariable("id") long id, Model model) {
+        Appointment appointment = appointmentService.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid appointment Id:" + id));
+
+        model.addAttribute("appointments", appointment);
+        List<Doctor> listDoctors = doctorService.findAll();
+        model.addAttribute("doctors", listDoctors);
+        return "add-appointments";
+    }
+/*    @PostMapping("/appointments/update/{id}")
+    public String updateAppointment(@PathVariable("id") long id,
+                               BindingResult result, Model model) {
+        Appointment appointment = appointmentService.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid appointment id:" + id));
+        if (result.hasErrors()) {
+            appointment.setId(id);
+            return "add-appointments";
+        }
+
+        appointmentService.saveOrUpdate(appointment);
+        return "redirect:/appointments";
+    }*/
+
+    @GetMapping("/appointments/delete/{id}")
+    public String deleteAppointments(@PathVariable("id") long id, Model model) {
+        Appointment appointment = appointmentService.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid appointment Id:" + id));
+        appointmentService.delete(appointment);
+        return "redirect:/appointments";
+    }
 }

@@ -24,7 +24,7 @@ import java.util.Optional;
 @RequestMapping
 public class PatientController {
 
-    PatientService patientService;
+  /*  PatientService patientService;
     @Autowired
     public PatientController(PatientService patientService) {
         this.patientService = patientService;
@@ -83,5 +83,5 @@ public class PatientController {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid patient Id:" + id));
         patientService.delete(patient);
         return "redirect:/patients";
-    }
+    }*/
 }

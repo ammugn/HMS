@@ -32,7 +32,7 @@ public class Doctor {
 
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<Appointment> appointments = new LinkedHashSet<>();
-    public void addAppointments(Appointment a){
+    public void addAppointment(Appointment a){
         appointments.add(a);
         a.setDoctor(this);
     }
@@ -64,4 +64,6 @@ public class Doctor {
                 ", department='" + department + '\'' +
                 '}';
     }
+
+
 }
