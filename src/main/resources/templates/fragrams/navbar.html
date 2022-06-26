@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<nav th:fragment="navbar" class="sidebar sidebar-hide-to-small sidebar-shrink sidebar-gestures">
+    <div class="sidebar sidebar-hide-to-small sidebar-shrink sidebar-gestures">
+        <div class="nano">
+            <div class="nano-content">
+                <ul>
+                    <div class="logo"><a href="index.html">
+                        <li>  <img src="/images/meditechlogo2.png" style="width:100px;height:100px"></a> </li>
+                        <li><a th:href="@{/}"><i class="ti-home"></i>Dashboard</a></li>
+                        <li><a href="#"><i class="ti-email"></i> Email</a></li>
+                        <li><a th:href="@{/patients}"><i class="ti-user"></i> Patients</a></li>
+                        <li><a th:href="@{/doctors}"><i class="ti-user"></i> Doctors</a></li>
+                        <li><a th:href="@{/appointments}"><i class="ti-time"></i> Appointments </a></li>
+                        <li><a href="#"><i class="ti-files"></i> Invoice</a></li>
+                        <!--   <span-->
+                        <!--                        class="sidebar-collapse-icon ti-angle-down"></span></a></li>-->
+                        <li><a href="#"><i class="ti-close"></i> Logout</a></li>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+</body>
+</html>

@@ -1,16 +1,38 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
-  <title>Doctor Details</title>
-  <link rel="stylesheet"
-        type="text/css"
-        href="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.css" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-</head>
+  <title>MediTech: Doctor Details</title>
 
+  <!-- Head-->
+  <div th:replace="fragrams/header :: header" />
 <body>
-<img src="/images/meditechlogo2.png" style="width:100px;height:100px">
-<div class="container">
+<!-- Responsive navbar-->
+<div th:replace="fragrams/navbar :: navbar" />
+<div class="content-wrap">
+  <div class="main">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-8 p-r-0 title-margin-right">
+          <div class="page-header">
+            <div class="page-title">
+              <h1>Hello, <span>Welcome Here</span></h1>
+            </div>
+          </div>
+        </div>
+        <!-- /# column -->
+        <div class="col-lg-4 p-l-0 title-margin-left">
+          <div class="page-header">
+            <div class="page-title">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                <li class="breadcrumb-item active">Doctor List</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        <!-- /# column -->
+      </div>
+      <section id="main-content">
   <h1>Doctor List</h1><br><br>
   <table class="table table-bordered table-striped" id="doctor">
     <thead>
@@ -39,19 +61,27 @@
   </table>
   <a th:href="@{/doctors/addNewDoctor}" class="btn btn-primary">Add Doctor</a>
   <br/><br/>
+      </section>
+    </div>
+  </div>
 </div>
 <!--
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.js"></script>
-        <script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.js"></script>-->
+
+<!-- Footer-->
+<div th:replace="fragrams/footer :: footer"/>
+<script>
 			$(document).ready(function() {
-				$("#patient").DataTable({
+				$("#doctor").DataTable({
 						'aoColumnDefs': [{
         				'bSortable': false,
         				'aTargets': [-1] /* 1st one, start by the right */
     				}]
 				});
 			})
-		</script>-->
+		</script>
+
+
 </body>
 </html>

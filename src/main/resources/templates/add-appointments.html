@@ -1,14 +1,39 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Add New Appointment</title>
+    <title>MediTech:Add New Appointment</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-</head>
+    <!-- Head-->
+    <div th:replace="fragrams/header :: header" />
 <body>
+<!-- Responsive navbar-->
+<div th:replace="fragrams/navbar :: navbar" />
 
-<div class="container">
-
+<div class="content-wrap">
+    <div class="main">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-8 p-r-0 title-margin-right">
+                    <div class="page-header">
+                        <div class="page-title">
+                            <h1>Hello, <span>Welcome Here</span></h1>
+                        </div>
+                    </div>
+                </div>
+                <!-- /# column -->
+                <div class="col-lg-4 p-l-0 title-margin-left">
+                    <div class="page-header">
+                        <div class="page-title">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                                <li class="breadcrumb-item active">Patient List</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <!-- /# column -->
+            </div>
+            <section id="main-content">
     <h3>Add New Appointment</h3>
     <hr/>
 
@@ -43,7 +68,13 @@
 
     <hr/>
     <a th:href="@{/appointments}">Back to list</a>
-</div>
+            </section>
 
+
+        </div>
+    </div>
+</div>
+<!-- Footer-->
+<div th:replace="fragrams/footer :: footer"/>
 </body>
 </html>
