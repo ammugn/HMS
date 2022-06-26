@@ -27,7 +27,7 @@
                     <tbody>
                     <tr th:each="patient: ${patients}">
                         <th scope="row" th:text="${patient.id}"></th>
-                        <td th:text="${patient.firstName}+' '+${patient.lastName}"></td>
+                        <td th:text="${patient.name}"></td>
                         <td th:text="${patient.email}"></td>
                         <td th:text="${patient.dob}"></td>
                         <td th:text="${patient.insurance}"></td>
@@ -35,6 +35,7 @@
                         <td>
                             <a th:href="@{/patients/edit/{id}(id=${patient.id})}" class="btn btn-info">Update</a>
                             <a th:href="@{/patients/delete/{id}(id=${patient.id})}" class="btn btn-danger ml-2">Delete</a>
+                            <a th:href="@{/appointments/addNewAppointment/{id}(id=${patient.id})}" class="btn btn-danger ml-2">Make Appointment</a>
 
                         </td>
                     </tr>

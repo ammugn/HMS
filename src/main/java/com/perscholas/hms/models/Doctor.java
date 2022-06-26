@@ -22,9 +22,8 @@ public class Doctor {
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator="dseq")
     Long id;
     @NonNull
-    String firstName;
-    @NonNull
-    String lastName;
+    String name;
+
     @NonNull
     String email;
     @NonNull
@@ -46,20 +45,19 @@ public class Doctor {
         if (this == o) return true;
         if (!(o instanceof Doctor)) return false;
         Doctor doctor = (Doctor) o;
-        return Objects.equals(id, doctor.id) && Objects.equals(firstName, doctor.firstName) && Objects.equals(lastName, doctor.lastName) && Objects.equals(email, doctor.email) && Objects.equals(department, doctor.department);
+        return Objects.equals(id, doctor.id) && Objects.equals(name, doctor.name) && Objects.equals(email, doctor.email) && Objects.equals(department, doctor.department);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, email, department);
+        return Objects.hash(id, name, email, department);
     }
 
     @Override
     public String toString() {
         return "Doctor{" +
                 "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+                ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", department='" + department + '\'' +
                 '}';

@@ -25,7 +25,7 @@
     <tbody>
     <tr th:each="doctor: ${doctors}">
       <th scope="row" th:text="${doctor.id}"></th>
-      <td th:text="${doctor.firstName}+' '+${doctor.lastName}"></td>
+      <td th:text="${doctor.name}"></td>
       <td th:text="${doctor.email}"></td>
       <td th:text="${doctor.department}"></td>
       <td>

@@ -45,6 +45,12 @@ public class PatientService {
         return patientRepository.findById(id);
     }
 
+    public Optional<Patient> findByName(String name)
+    {
+
+        return patientRepository.findByName(name);
+    }
+
     public void delete(Patient patient) {
        patientRepository.delete(patient);
     }

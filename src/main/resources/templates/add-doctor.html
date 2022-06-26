@@ -14,9 +14,7 @@
 
     <form th:action="@{/doctors/saveorupdatedoctor}" th:object="${doctor}" method="POST">
 
-        <input style="width:500px" type="text" th:field="*{firstName}" class="form-control col-4 mb-4" placeholder="First Name" />
-
-        <input style="width:500px" type="text" th:field="*{lastName}" class="form-control col-4 mb-4" placeholder="Last Name" />
+        <input style="width:500px" type="text" th:field="*{name}" class="form-control col-4 mb-4" placeholder="Name" />
 
         <input style="width:500px" type="text" th:field="*{email}" class="form-control col-4 mb-4" placeholder="Enter Email" />
 

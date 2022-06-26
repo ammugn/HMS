@@ -44,6 +44,10 @@ public class DoctorService {
         return doctorRepository.findById(id);
     }
 
+    public Optional<Doctor> findByName(String name){
+        return doctorRepository.findByName(name);
+    }
+
     public void delete(Doctor doctor) {
         doctorRepository.delete(doctor);
     }

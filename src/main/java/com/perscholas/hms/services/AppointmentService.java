@@ -2,7 +2,6 @@ package com.perscholas.hms.services;
 
 import com.perscholas.hms.data.AppointmentRepository;
 import com.perscholas.hms.models.Appointment;
-import com.perscholas.hms.models.Patient;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +37,7 @@ public class AppointmentService {
     public Optional<Appointment> findById(long id)
     {
         return appointmentRepository.findById(id);
+
     }
 
     public void delete(Appointment a) {

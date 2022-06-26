@@ -15,7 +15,7 @@
     <form th:action="@{/appointments/saveorupdateappointment}" th:object="${appointments}" method="POST">
 
         <label for="pname" class="col-lg-2 col-form-label">Patient Name</label>
-        <input  type="text" th:field="*{patientName}" class="col-lg-6" placeholder="Patient Name" id="pname" /><br><br>
+        <input  type="text" th:field="*{patientName}" class="col-lg-6"  placeholder="Patient Name"  th:name="pname" id="pname" /><br><br>
          <label for="issue" class="col-lg-2 col-form-label">Issue</label>
         <input  type="text" th:field="*{issue}" class="col-lg-6" placeholder="Enter Reason for consultation" id="issue"/><br><br>
         <label for="date" class="col-lg-2 col-form-label">Appointment Date</label>
@@ -25,9 +25,16 @@
         <label for="diagnosis" class="col-lg-2 col-form-label">Diagnosis</label>
         <textarea   th:field="*{diagnosis}" class="col-lg-6 col-form-label" placeholder="To be entered by the doctor" disabled id="diagnosis"></textarea><br><br>
         <label class="col-lg-2 col-form-label">Consulting Doctor</label>
-        <select class="col-lg-2 col-form-label" th:field="*{doctorName}">
-            <option th:each="d : ${doctors}" th:value="${d.firstName}+' '+${d.LastName}" th:text="${d.firstName}+' '+${d.LastName}" />
-        </select>
+        <select class="col-lg-6 col-form-label" th:field="*{doctorName}">
+            <option  th:name="dname" id="dname" th:each="d : ${doctors}" th:value="${d.name}" th:text="${d.name}" />
+        </select></br>
+        <label class="col-lg-2 col-form-label">Appointment Status</label>
+
+ <!--       <select id="status" name="status" class="col-lg-6 col-form-label" th:field="*{isComplete}">
+            <option value="0" th:text="Pending"/>
+            <option value="1" th:text="Complete"/>
+        </select>-->
+
         <br/><br/><br/>
         <button type="submit" class="btn btn-primary col-2">Save</button>
         <input type="hidden" th:field="*{id}" />

@@ -33,8 +33,7 @@
             <td th:text="${appointment.appointmentDate}+' '+${appointment.appointmentTime}"></td>
             <td th:text="${appointment.issue}"></td>
             <td th:text="${appointment.diagnosis}"></td>
-            <td th:text="${appointment.isComplete}?'COMPLETE' : 'PENDING
-            '"></td>
+            <td th:text="${appointment.isComplete}?'COMPLETE' : 'PENDING'"></td>
             <td>
                 <a th:href="@{/appointments/edit/{id}(id=${appointment.id})}" class="btn btn-info">Update</a>
                 <a th:href="@{/appointments/delete/{id}(id=${appointment.id})}" class="btn btn-danger ml-2">Delete</a>
@@ -44,6 +43,6 @@
 
         </tbody>
     </table>
-    <a th:href="@{/appointments/addNewAppointment}" class="btn btn-primary">Add Appointment</a>
+  <!--  <a th:href="@{/appointments/addNewAppointment}" class="btn btn-primary">Add Appointment</a>-->
     <br/><br/>
 </div>

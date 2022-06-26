@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * @author Ammu Nair
@@ -45,5 +46,16 @@ public class Appointment {
     @JoinColumn(name = "doctor_id")
     private Doctor doctor;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Appointment)) return false;
+        Appointment that = (Appointment) o;
+        return isComplete == that.isComplete && Objects.equals(id, that.id) && patientName.equals(that.patientName) && doctorName.equals(that.doctorName) && issue.equals(that.issue) && diagnosis.equals(that.diagnosis) && appointmentDate.equals(that.appointmentDate) && appointmentTime.equals(that.appointmentTime) && Objects.equals(patient, that.patient) && Objects.equals(doctor, that.doctor);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, patientName, doctorName, issue, diagnosis, appointmentDate, appointmentTime, isComplete, patient, doctor);
+    }
 }

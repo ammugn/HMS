@@ -42,16 +42,20 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
     //Populating Patient data
-        patientService.saveOrUpdate(new Patient("Ammu","Nair","ammugn@gmail.com", "1988-12-05","Aetna","Mill Creek,WA"));
-        patientService.saveOrUpdate(new Patient("Emma","Morgan","emma@gmail.com", "1999-05-20","Cigna","Bellevue,WA"));
-        patientService.saveOrUpdate(new Patient("John","Doe","john@gmail.com", "1999-08-25","UnitedHealth","Bellevue,WA"));
+        patientService.saveOrUpdate(new Patient("Ammu Nair","ammugn@gmail.com", "1988-12-05","Aetna","Mill Creek,WA"));
+        patientService.saveOrUpdate(new Patient("Emma Morgan","emma@gmail.com", "1999-05-20","Cigna","Bellevue,WA"));
+        patientService.saveOrUpdate(new Patient("John Doe","john@gmail.com", "1999-08-25","UnitedHealth","Bellevue,WA"));
      //Populating Doctor data
-        doctorService.saveOrUpdate(new Doctor("Gregory","House","ghouse@gmail.com","Primary Physician"));
-        doctorService.saveOrUpdate(new Doctor("Meredith","Grey","mgrey@gmail.com","Cardiologist"));
-        doctorService.saveOrUpdate(new Doctor("Richard","Webber","rwebber@gmail.com","Primary Physician"));
+        doctorService.saveOrUpdate(new Doctor("Gregory House","ghouse@gmail.com","Primary Physician"));
+        doctorService.saveOrUpdate(new Doctor("Meredith Grey","mgrey@gmail.com","Cardiologist"));
+        doctorService.saveOrUpdate(new Doctor("Richard Webber","rwebber@gmail.com","Primary Physician"));
         //Populating Appointment data
-        appointmentService.saveOrUpdate(new Appointment("Ammu Nair","Gregory House","fever","flu","2022-23-06","10",true));
+        appointmentService.saveOrUpdate(new Appointment("Ammu Nair","Gregory House","fever","flu","2022-23-06","10:00",true));
 
+      //  patientService.addAppointment(101L,appointmentService.findById(1));
+     //   doctorService.addAppointment(201L,appointmentService.findById(1));
+
+       // studentService.addCourse(JAFERID, courseService.findById(1));
     }
 }
 

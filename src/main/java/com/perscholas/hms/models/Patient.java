@@ -24,9 +24,7 @@ public class Patient {
     //@GeneratedValue(strategy = GenerationType.AUTO)
     long id;
     @NonNull
-    String firstName;
-    @NonNull
-    String lastName;
+    String name;
     @NonNull
     String email;
     @NonNull
@@ -36,7 +34,8 @@ public class Patient {
     @NonNull
     String address;
 
-    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
     private Set<Appointment> appointments = new LinkedHashSet<>();
 
 
@@ -65,8 +64,7 @@ public class Patient {
     public String toString() {
         return "Patient{" +
                 "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+                ", name='" + name + '\'' +
                 ", dob=" + dob +
                 ", insurance='" + insurance + '\'' +
                 ", address='" + address + '\'' +
@@ -79,11 +77,11 @@ public class Patient {
         if (this == o) return true;
         if (!(o instanceof Patient)) return false;
         Patient patient = (Patient) o;
-        return Objects.equals(id, patient.id) && Objects.equals(firstName, patient.firstName) && Objects.equals(lastName, patient.lastName) && Objects.equals(dob, patient.dob) && Objects.equals(insurance, patient.insurance) && Objects.equals(address, patient.address);
+        return Objects.equals(id, patient.id) && Objects.equals(name, patient.name)  && Objects.equals(dob, patient.dob) && Objects.equals(insurance, patient.insurance) && Objects.equals(address, patient.address);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, dob, insurance, address);
+        return Objects.hash(id, name, dob, insurance, address);
     }
 }
