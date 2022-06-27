@@ -40,17 +40,30 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
     }
     @Override
     public void run(String... args) throws Exception {
+        //Populating Patient data
+        Patient patient1=new Patient("Ammu Nair","ammugn@gmail.com", "1988-12-05","Aetna","Mill Creek,WA");
+        Patient patient2=new Patient("Emma Morgan","emma@gmail.com", "1999-05-20","Cigna","Bellevue,WA");
+        Patient patient3=new Patient("John Doe","john@gmail.com", "1999-08-25","UnitedHealth","Bellevue,WA");
 
-    //Populating Patient data
-        patientService.saveOrUpdate(new Patient("Ammu Nair","ammugn@gmail.com", "1988-12-05","Aetna","Mill Creek,WA"));
-        patientService.saveOrUpdate(new Patient("Emma Morgan","emma@gmail.com", "1999-05-20","Cigna","Bellevue,WA"));
-        patientService.saveOrUpdate(new Patient("John Doe","john@gmail.com", "1999-08-25","UnitedHealth","Bellevue,WA"));
+        patientService.saveOrUpdate(patient1);
+        patientService.saveOrUpdate(patient2);
+        patientService.saveOrUpdate(patient3);
      //Populating Doctor data
-        doctorService.saveOrUpdate(new Doctor("Gregory House","ghouse@gmail.com","Primary Physician"));
-        doctorService.saveOrUpdate(new Doctor("Meredith Grey","mgrey@gmail.com","Cardiologist"));
-        doctorService.saveOrUpdate(new Doctor("Richard Webber","rwebber@gmail.com","Primary Physician"));
+        Doctor doctor1=new Doctor("Gregory House","ghouse@gmail.com","Primary Physician");
+        Doctor doctor2=new Doctor("Meredith Grey","mgrey@gmail.com","Cardiologist");
+        Doctor doctor3=new Doctor("Richard Webber","rwebber@gmail.com","Primary Physician");
+        doctorService.saveOrUpdate(doctor1);
+        doctorService.saveOrUpdate(doctor2);
+        doctorService.saveOrUpdate(doctor3);
+
         //Populating Appointment data
-        appointmentService.saveOrUpdate(new Appointment("Ammu Nair","Gregory House","fever","flu","2022-23-06","10:00",true));
+        Appointment appointment1=new Appointment("Ammu Nair","Gregory House","fever","flu","2022-23-06","10:00",true);
+
+        appointmentService.saveOrUpdate(appointment1);
+        appointment1.setPatient(patient1);
+        appointment1.setDoctor(doctor1);
+        appointmentService.saveOrUpdate(appointment1);
+
 
       //  patientService.addAppointment(101L,appointmentService.findById(1));
      //   doctorService.addAppointment(201L,appointmentService.findById(1));

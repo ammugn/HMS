@@ -175,7 +175,7 @@ public class AdminController {
         Appointment appointment = new Appointment();
         model.addAttribute("appointments", appointment);
         Patient p=patientService.findById(id).orElseThrow();
-
+       // patientService.addAppointment(id,appointment);
         model.addAttribute("patient", p);
         List<Doctor> listDoctors = doctorService.findAll();
         model.addAttribute("doctors", listDoctors);
@@ -186,13 +186,35 @@ public class AdminController {
 
     @PostMapping("/appointments/saveorupdateappointment")
     public String saveUpdateAppointment(RedirectAttributes model, @ModelAttribute("appointments") Appointment appointment) throws NoSuchElementException {
-        appointmentService.saveOrUpdate(appointment);
+
+        /*appointmentService.saveOrUpdate(appointment);
         String patientName=appointment.getPatientName();
+        log.info(patientName);
         String doctorName=appointment.getDoctorName();
+        log.info(patientName);
         Optional<Patient> p1= patientService.findByName(patientName);
-        Optional<Doctor> d1=doctorService.findByName(doctorName);
-        patientService.addAppointment(p1.orElseThrow().getId(), appointment);
-        doctorService.addAppointment(d1.orElseThrow().getId(), appointment);
+                Optional<Doctor> d1=doctorService.findByName(doctorName);
+        patientService.addAppointment(p1.orElseThrow().getId(),appointment);
+        doctorService.addAppointment(d1.orElseThrow().getId(),appointment);
+
+        log.info("New Appointment added successfully");
+        return "redirect:/appointments";*/
+        appointmentService.saveOrUpdate(appointment);
+        String patientName = appointment.getPatientName();
+        String doctorName = appointment.getDoctorName();
+        log.info(patientName);
+        Optional<Patient> p1 = patientService.findByName(patientName);
+        Optional<Doctor> d1 = doctorService.findByName(doctorName);
+        log.info(p1.get().getId()+" "+p1.get().getName());
+        appointment.setDoctor(d1.get());
+        appointment.setPatient(p1.get());
+        log.info(appointment.toString());
+        appointmentService.saveOrUpdate(appointment);
+
+      //  patientService.addAppointment(p1.get().getId(), appointment);
+
+      //  doctorService.addAppointment(d1.get().getId(), appointment);
+
 
         log.info("New Appointment added successfully");
         return "redirect:/appointments";
@@ -200,11 +222,13 @@ public class AdminController {
     }
     @PostMapping("/appointments/saveorupdateappointment/{id}")
     public String saveAppointment(@ModelAttribute("patientId") Object flashAttribute, @ModelAttribute("appointments") Appointment appointment) throws NoSuchElementException{
-        appointmentService.saveOrUpdate(appointment);
         String patientName = appointment.getPatientName();
         String doctorName = appointment.getDoctorName();
         Optional<Patient> p1 = patientService.findByName(patientName);
         Optional<Doctor> d1 = doctorService.findByName(doctorName);
+        appointment.setDoctor(d1.orElseThrow());
+        appointment.setPatient(p1.orElseThrow());
+        appointmentService.saveOrUpdate(appointment);
         patientService.addAppointment(p1.orElseThrow().getId(), appointment);
         doctorService.addAppointment(d1.orElseThrow().getId(), appointment);
 
@@ -242,6 +266,7 @@ public class AdminController {
         Appointment appointment = appointmentService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid appoinment Id:" + id));
          appointmentService.delete(appointment);
+
         return "redirect:/appointments";
     }
 }
