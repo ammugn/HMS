@@ -59,6 +59,13 @@ public class DoctorService {
         doctor.addAppointment(appointment);
         doctorRepository.save(doctor);
     }
+    public void removeAppointment(Long id, Appointment appointment) throws NoSuchElementException {
+
+        Doctor doctor = doctorRepository.findById(id).orElseThrow();
+        doctor.removeAppointment(appointment);
+        //   appointmentRepository.delete(appointment);
+        doctorRepository.save(doctor);
+    }
 
 
 }
