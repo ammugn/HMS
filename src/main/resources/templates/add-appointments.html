@@ -2,6 +2,8 @@
 
 <head>
     <title>MediTech:Add New Appointment</title>
+<!--    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>-->
+
 
     <!-- Head-->
     <div th:replace="fragrams/header :: header" />
@@ -36,7 +38,7 @@
             <section id="main-content">
     <h3>Add New Appointment</h3>
     <hr/>
-
+                <div class="bootstrap-iso">
     <form th:action="@{/appointments/saveorupdateappointment}" th:object="${appointments}" method="POST">
 
         <label for="pname" class="col-lg-2 col-form-label">Patient Name</label>
@@ -44,9 +46,9 @@
          <label for="issue" class="col-lg-2 col-form-label">Issue</label>
         <input  type="text" th:field="*{issue}" class="col-lg-6" placeholder="Enter Reason for consultation" id="issue"/><br><br>
         <label for="date" class="col-lg-2 col-form-label">Appointment Date</label>
-        <input  type="date" th:field="*{appointmentDate}" class="col-lg-6 col-form-label" id="date"/><br><br>
+        <input  type="date" th:field="*{appointmentDate}" class="col-lg-6 col-form-label" id="date" min="2022/06/06" max="2024/06/06"/><br><br>
         <label for="time" class="col-lg-2 col-form-label">Appointment Time</label>
-        <input  type="time" th:field="*{appointmentTime}" class="col-lg-6 col-form-label" id="time"/><br><br>
+        <input  type="time" th:field="*{appointmentTime}" class="col-lg-6 col-form-label" id="time" min="09:00" max="17:00" step="1800" required/><span>hours are from 9:00am to 5:00pm </span><br><br>
         <label for="diagnosis" class="col-lg-2 col-form-label">Diagnosis</label>
         <textarea   th:field="*{diagnosis}" class="col-lg-6 col-form-label" placeholder="To be entered by the doctor" disabled id="diagnosis"></textarea><br><br>
         <label class="col-lg-2 col-form-label">Consulting Doctor</label>
@@ -54,6 +56,10 @@
             <option  th:name="dname" id="dname" th:each="d : ${doctors}" th:value="${d.name}" th:text="${d.name}" />
         </select></br>
         <label class="col-lg-2 col-form-label">Appointment Status</label>
+        <!-- Date input -->
+            <label   for="date2">Date</label>
+            <input  id="date2" name="date2" placeholder="MM/DD/YYY" type="text"/>
+
 
  <!--       <select id="status" name="status" class="col-lg-6 col-form-label" th:field="*{isComplete}">
             <option value="0" th:text="Pending"/>
@@ -65,6 +71,7 @@
         <input type="hidden" th:field="*{id}" />
 
     </form>
+                </div>
 
     <hr/>
     <a th:href="@{/appointments}">Back to list</a>
@@ -74,7 +81,42 @@
         </div>
     </div>
 </div>
+
+
+
 <!-- Footer-->
 <div th:replace="fragrams/footer :: footer"/>
+<script>
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth()+1; //January is 0 so need to add 1 to make it 1!
+var yyyy = today.getFullYear();
+if(dd<10){
+  dd='0'+dd
+}
+if(mm<10){
+  mm='0'+mm
+}
+today = yyyy+'-'+mm+'-'+dd;
+document.getElementById("date").setAttribute("min", today);
+//for boot strap date picker
+  $(document).ready(function(){
+      var date_input=$('input[name="date2"]'); //date picker input has the name "date2"
+      var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+      var options={
+      format: 'mm/dd/yyyy',
+        container: container,
+        orientation: "bottom left",
+        daysOfWeekDisabled: "0,6",
+        daysOfWeekHighlighted: "1,2,3,4,5",
+        todayHighlight: true,
+        startDate: '+1d',
+        autoclose: true,
+
+      };
+      date_input.datepicker(options);
+    })
+
+</script>
 </body>
 </html>

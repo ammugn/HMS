@@ -50,6 +50,7 @@ public class DoctorService {
 
     public void delete(Doctor doctor) {
         doctorRepository.delete(doctor);
+
     }
 
     public void addAppointment(Long id, Appointment appointment) throws NoSuchElementException {
