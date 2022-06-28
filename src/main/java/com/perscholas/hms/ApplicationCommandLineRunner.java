@@ -65,10 +65,7 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
         appointmentService.saveOrUpdate(appointment1);
 
 
-      //  patientService.addAppointment(101L,appointmentService.findById(1));
-     //   doctorService.addAppointment(201L,appointmentService.findById(1));
 
-       // studentService.addCourse(JAFERID, courseService.findById(1));
     }
 }
 
