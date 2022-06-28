@@ -1,6 +1,7 @@
 package com.perscholas.hms.controllers;
 
 import com.perscholas.hms.models.Appointment;
+import com.perscholas.hms.models.Users;
 import com.perscholas.hms.services.AppointmentService;
 import com.perscholas.hms.services.DoctorService;
 import com.perscholas.hms.services.PatientService;
@@ -30,7 +31,7 @@ import java.util.Optional;
 public class AdminController {
 
    UserService userService;
-    AppointmentService appointmentService;
+   AppointmentService appointmentService;
 
     @Autowired
     public AdminController(UserService userService, AppointmentService appointmentService) {
@@ -42,65 +43,67 @@ public class AdminController {
     @GetMapping("/patients")
     public String getAllPatients(Model model) {
         log.info("Patient list displayed");
-        model.addAttribute("patients", userService.findAll());
+        model.addAttribute("patients", userService.findAllPatients());
         return "patients";
     }
-  /*  @GetMapping("/patients/addNewPatient")
+    @GetMapping("/patients/addNewPatient")
     public String addNewPatient(Model model) {
-        Patient newPatient = new Patient();
+        Users newPatient = new Users();
         model.addAttribute("patient", newPatient);
-        List<String> listInsurance = Arrays.asList("Optum", "UnitedHealthCare", "Aetna","Cigna");
+        List<String> listInsurance = Arrays.asList("UnitedHealthCare", "Aetna","Cigna");
         model.addAttribute("listInsurance", listInsurance);
         log.info("New Patient addition");
         return "add-patient";
     }
     @PostMapping("/patients/saveorupdatepatient")
-    public String saveUpdatePatient(RedirectAttributes model, @ModelAttribute("patient") Patient patient){
-        patientService.saveOrUpdate(patient);
+    public String saveUpdatePatient(RedirectAttributes model, @ModelAttribute("patient") Users patient){
+        userService.saveOrUpdate(patient);
         log.info("New Patient added successfully");
         return "redirect:/patients";
 
     }
+
     @GetMapping("/patients/edit/{id}")
     public String showUpdateForm(@PathVariable("id") long id, Model model) {
-        Patient patient = patientService.findById(id)
+        Users patient = userService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid patient Id:" + id));
 
         model.addAttribute("patient", patient);
-        List<String> listInsurance = Arrays.asList("Optum", "UnitedHealthCare", "Aetna","Cigna");
+        List<String> listInsurance = Arrays.asList("UnitedHealthCare","Aetna","Cigna");
         model.addAttribute("listInsurance", listInsurance);
         return "add-patient";
     }
     @PostMapping("/patients/update/{id}")
     public String updateUser(@PathVariable("id") long id,
                              BindingResult result, Model model) {
-        Patient patient = patientService.findById(id)
+        Users patient = userService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid patient Id:" + id));
         if (result.hasErrors()) {
             patient.setId(id);
             return "add-patient";
         }
 
-        patientService.saveOrUpdate(patient);
+        userService.saveOrUpdate(patient);
         return "redirect:/patients";
     }
 
     @GetMapping("/patients/delete/{id}")
     public String deletePatient(@PathVariable("id") long id, Model model) {
-        Patient patient = patientService.findById(id)
+        Users patient = userService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid patient Id:" + id));
-        patientService.delete(patient);
+        userService.delete(patient);
         return "redirect:/patients";
     }
 
 
-    *//***** Admin controllers for Doctors *******//*
+    /***** Admin controllers for Doctors *******/
     @GetMapping("/doctors")
     public String getAllDoctors(Model model) {
         log.info("Doctor list displayed");
-        model.addAttribute("doctors", doctorService.findAll());
+        model.addAttribute("doctors", userService.findAllDoctors());
         return "doctors";
     }
+    /*
     @GetMapping("/doctors/addNewDoctor")
     public String addNewDoctor(Model model) {
         Doctor doctor = new Doctor();

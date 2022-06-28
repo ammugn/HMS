@@ -17,13 +17,16 @@ public interface UserRepository extends JpaRepository<Users,Long> {
     Users findByEmail(String email);
     Optional<Users> findByName(String name);
 
+    @Query(value = "select * from users where insurance IS NOT NULL",nativeQuery = true)
+    List<Users> findAllPatients();
 
- /*   @Query(value = "select * from course where id  > :id")
-    List<Users> findAllPatients(String email);
+    @Query(value = "select * from users where department IS NOT NULL",nativeQuery = true)
+    List<Users> findAllDoctors();
 
-
-    @Query(nativeQuery = true)
+   /* @Query(nativeQuery = true)
     List<Appointment> findDoctorAppointments(String email);
     @Query(nativeQuery = true)
     List<Appointment> findPatientAppointments(String email);*/
+
+
 }

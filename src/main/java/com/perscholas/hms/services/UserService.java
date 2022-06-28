@@ -32,6 +32,12 @@ public class UserService {
     public List<Users> findAll(){
         return userRepository.findAll();
     }
+    public List<Users> findAllPatients(){
+        return userRepository.findAllPatients();
+    }
+    public List<Users> findAllDoctors(){
+        return userRepository.findAllDoctors();
+    }
 
     public void saveOrUpdate(Users u){
         log.info(u.toString());

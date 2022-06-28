@@ -48,12 +48,12 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
         patient1.setInsurance("Aetna");
         patient1.addAppointment(new Appointment("ammugn@gmail.com","ghouse@gmail.com","fever","flu","2022-08-7","10:00",false));
         Users patient2=new Users("Emma Morgan","emma@gmail.com", "password","1999-05-20","Mill Creek,WA");
-        patient1.setInsurance("Cigna");
+        patient2.setInsurance("Cigna");
         Users patient3=new Users("John Doe","john@gmail.com", "password","1988-12-05","Mill Creek,WA");
-        patient1.setInsurance("Aetna");
+        patient3.setInsurance("United Health");
 
         Users doctor1=new Users("Gregory House","ghouse@gmail.com", "password","1988-12-05","Mill Creek,WA");
-        patient1.setDepartment("Primary Physician");
+        doctor1.setDepartment("Primary Physician");
         userRepository.save(patient1);
         userRepository.save(patient2);
         userRepository.save(patient3);
