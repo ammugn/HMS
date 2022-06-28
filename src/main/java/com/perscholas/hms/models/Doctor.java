@@ -23,7 +23,6 @@ public class Doctor {
     Long id;
     @NonNull
     String name;
-
     @NonNull
     String email;
     @NonNull

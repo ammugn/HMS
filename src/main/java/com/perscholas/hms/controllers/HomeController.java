@@ -11,7 +11,6 @@ public class HomeController {
 
     @GetMapping(value = {"/", "index"})
     public String homePage(){
-
         return "dashboard";
     }
 }
