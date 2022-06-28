@@ -1,20 +1,10 @@
 package com.perscholas.hms.controllers;
 
-import com.perscholas.hms.models.Patient;
-import com.perscholas.hms.services.PatientService;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
 
 /**
  * @author Ammu Nair

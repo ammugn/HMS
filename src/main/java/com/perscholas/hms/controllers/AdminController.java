@@ -1,11 +1,10 @@
 package com.perscholas.hms.controllers;
 
 import com.perscholas.hms.models.Appointment;
-import com.perscholas.hms.models.Doctor;
-import com.perscholas.hms.models.Patient;
 import com.perscholas.hms.services.AppointmentService;
 import com.perscholas.hms.services.DoctorService;
 import com.perscholas.hms.services.PatientService;
+import com.perscholas.hms.services.UserService;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
@@ -30,23 +29,23 @@ import java.util.Optional;
 @RequestMapping
 public class AdminController {
 
-    PatientService patientService;
-    DoctorService doctorService;
+   UserService userService;
     AppointmentService appointmentService;
+
     @Autowired
-    public AdminController(PatientService patientService, DoctorService doctorService, AppointmentService appointmentService) {
-        this.patientService = patientService;
-        this.doctorService = doctorService;
+    public AdminController(UserService userService, AppointmentService appointmentService) {
+        this.userService = userService;
         this.appointmentService = appointmentService;
     }
+
 
     @GetMapping("/patients")
     public String getAllPatients(Model model) {
         log.info("Patient list displayed");
-        model.addAttribute("patients", patientService.findAll());
+        model.addAttribute("patients", userService.findAll());
         return "patients";
     }
-    @GetMapping("/patients/addNewPatient")
+  /*  @GetMapping("/patients/addNewPatient")
     public String addNewPatient(Model model) {
         Patient newPatient = new Patient();
         model.addAttribute("patient", newPatient);
@@ -95,7 +94,7 @@ public class AdminController {
     }
 
 
-    /***** Admin controllers for Doctors *******/
+    *//***** Admin controllers for Doctors *******//*
     @GetMapping("/doctors")
     public String getAllDoctors(Model model) {
         log.info("Doctor list displayed");
@@ -129,7 +128,7 @@ public class AdminController {
         log.info("in showUpdateDoctorForm ()");
         return "add-doctor";
     }
-/*    @PostMapping("/doctors/update/{id}")
+*//*    @PostMapping("/doctors/update/{id}")
     public String updateDoctor(@PathVariable("id") long id,
                                BindingResult result, Model model) {
         Doctor doctor = doctorService.findById(id)
@@ -142,7 +141,7 @@ public class AdminController {
         doctorService.saveOrUpdate(doctor);
         log.info("in updateDoctor()");
         return "redirect:/doctors";
-    }*/
+    }*//*
 
     @GetMapping("/doctors/delete/{id}")
     public String deleteDoctor(@PathVariable("id") long id, Model model) {
@@ -153,7 +152,7 @@ public class AdminController {
     }
 
 
-    /*****Admin controllers for Appointments*******/
+    *//*****Admin controllers for Appointments*******//*
 
     @GetMapping("/appointments")
     public String getAllAppointments(Model model) {
@@ -187,7 +186,7 @@ public class AdminController {
     @PostMapping("/appointments/saveorupdateappointment")
     public String saveUpdateAppointment(RedirectAttributes model, @ModelAttribute("appointments") Appointment appointment) throws NoSuchElementException {
 
-        /*appointmentService.saveOrUpdate(appointment);
+        *//*appointmentService.saveOrUpdate(appointment);
         String patientName=appointment.getPatientName();
         log.info(patientName);
         String doctorName=appointment.getDoctorName();
@@ -198,7 +197,11 @@ public class AdminController {
         doctorService.addAppointment(d1.orElseThrow().getId(),appointment);
 
         log.info("New Appointment added successfully");
-        return "redirect:/appointments";*/
+        return "redirect:/appointments";*//*
+
+
+
+
         appointmentService.saveOrUpdate(appointment);
         String patientName = appointment.getPatientName();
         String doctorName = appointment.getDoctorName();
@@ -210,12 +213,6 @@ public class AdminController {
         appointment.setPatient(p1.get());
         log.info(appointment.toString());
         appointmentService.saveOrUpdate(appointment);
-
-      //  patientService.addAppointment(p1.get().getId(), appointment);
-
-      //  doctorService.addAppointment(d1.get().getId(), appointment);
-
-
         log.info("New Appointment added successfully");
         return "redirect:/appointments";
 
@@ -247,7 +244,7 @@ public class AdminController {
         model.addAttribute("doctors", listDoctors);
         return "add-appointments";
     }
-/*    @PostMapping("/appointments/update/{id}")
+*//*    @PostMapping("/appointments/update/{id}")
     public String updateAppointment(@PathVariable("id") long id,
                                BindingResult result, Model model) {
         Appointment appointment = appointmentService.findById(id)
@@ -259,7 +256,7 @@ public class AdminController {
 
         appointmentService.saveOrUpdate(appointment);
         return "redirect:/appointments";
-    }*/
+    }*//*
 
     @GetMapping("/appointments/delete/{id}")
     public String deleteAppointments(@PathVariable("id") long id, Model model) {
@@ -274,5 +271,5 @@ public class AdminController {
          appointmentService.delete(appointment);
 
         return "redirect:/appointments";
-    }
+    }*/
 }

@@ -4,17 +4,18 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.time.LocalDate;
+import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author Ammu Nair
  */
 @Getter
 @Setter
-//@NoArgsConstructor
+@NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Entity
@@ -24,9 +25,9 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     @NonNull
-    String patientName;
+    String patientEmail;
     @NonNull
-    String doctorName;
+    String doctorEmail;
     @NonNull
     String issue;
     @NonNull
@@ -38,31 +39,15 @@ public class Appointment {
     @NonNull
     boolean isComplete;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.EAGER)
-    @JoinColumn(name = "patient_id")
 
-    private Patient patient;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.EAGER)
-    @JoinColumn(name = "doctor_id")
-    private Doctor doctor;
+    @ManyToMany(mappedBy = "appointments", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH},fetch = FetchType.EAGER)
+    private Set<Users> users = new LinkedHashSet<>();
 
-    public Appointment() {
+   public  void addUsers(Users user){
+       users.add(user);
+       user.getAppointments().add(this);
+   }
 
-        this.diagnosis="No diagnosis yet";
-       this.isComplete=false;
-    }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Appointment)) return false;
-        Appointment that = (Appointment) o;
-        return isComplete == that.isComplete && Objects.equals(id, that.id) && patientName.equals(that.patientName) && doctorName.equals(that.doctorName) && issue.equals(that.issue) && diagnosis.equals(that.diagnosis) && appointmentDate.equals(that.appointmentDate) && appointmentTime.equals(that.appointmentTime);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, patientName, doctorName, issue, diagnosis, appointmentDate, appointmentTime, isComplete);
-    }
 }

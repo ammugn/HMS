@@ -1,9 +1,7 @@
 package com.perscholas.hms.services;
 
 import com.perscholas.hms.data.AppointmentRepository;
-import com.perscholas.hms.data.PatientRepository;
 import com.perscholas.hms.models.Appointment;
-import com.perscholas.hms.models.Patient;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +18,7 @@ import java.util.Optional;
 @Service @Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class PatientService {
-    PatientRepository patientRepository;
+   /* PatientRepository patientRepository;
     AppointmentRepository appointmentRepository;
 
 
@@ -69,6 +67,6 @@ public class PatientService {
         patientRepository.save(patient);
     }
 
-
+*/
 
 }

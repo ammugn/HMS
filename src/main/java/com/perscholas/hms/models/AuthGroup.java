@@ -25,6 +25,6 @@ public class AuthGroup {
     @NonNull
     String aEmail;
     @NonNull
-    String aAuthGroup;
+    String role;
 
 }

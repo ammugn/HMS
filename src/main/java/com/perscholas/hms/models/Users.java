@@ -3,47 +3,58 @@ package com.perscholas.hms.models;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter @Setter
 @NoArgsConstructor
-@AllArgsConstructor
-@RequiredArgsConstructor
+//@AllArgsConstructor
+//@RequiredArgsConstructor
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Users {
     @Id
-    long userId;
-    @NonNull
-    String username;
-    @NonNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+    String name;
+
+    @Column(unique = true)
+    String email;
+
     String password;
-    @NonNull
-    long roleId;
 
-    @Override
-    public String toString() {
-        return "Users{" +
-                "userId=" + userId +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", roleId=" + roleId +
-                '}';
+    String dob;
+
+    String address;
+
+    String insurance;
+
+    String department;
+
+    public Users( String name,  String email, String password,  String dob,  String address) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.dob = dob;
+        this.address = address;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Users)) return false;
-        Users users = (Users) o;
-        return userId == users.userId && roleId == users.roleId && username.equals(users.username) && password.equals(users.password);
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH},fetch = FetchType.EAGER)
+    @JoinTable(name = "users_appointments",
+            joinColumns = @JoinColumn(name = "users_id"),
+            inverseJoinColumns = @JoinColumn(name = "appointments_id"))
+    private Set<Appointment> appointments = new LinkedHashSet<>();
+
+    public void addAppointment(Appointment appointment){
+        appointments.add(appointment);
+        appointment.getUsers().add(this);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(userId, username, password, roleId);
+    public void removeAppointment(Appointment appointment) {
+        appointments.remove(appointment);
+        appointment.setUsers(null);
     }
 }
