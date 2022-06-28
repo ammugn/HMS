@@ -50,7 +50,7 @@ public class AdminController {
     public String addNewPatient(Model model) {
         Users newPatient = new Users();
         model.addAttribute("patient", newPatient);
-        List<String> listInsurance = Arrays.asList("UnitedHealthCare", "Aetna","Cigna");
+        List<String> listInsurance = Arrays.asList("United Health", "Aetna","Cigna");
         model.addAttribute("listInsurance", listInsurance);
         log.info("New Patient addition");
         return "add-patient";
@@ -69,7 +69,7 @@ public class AdminController {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid patient Id:" + id));
 
         model.addAttribute("patient", patient);
-        List<String> listInsurance = Arrays.asList("UnitedHealthCare","Aetna","Cigna");
+        List<String> listInsurance = Arrays.asList("United Health","Aetna","Cigna");
         model.addAttribute("listInsurance", listInsurance);
         return "add-patient";
     }
@@ -103,59 +103,46 @@ public class AdminController {
         model.addAttribute("doctors", userService.findAllDoctors());
         return "doctors";
     }
-    /*
+
     @GetMapping("/doctors/addNewDoctor")
     public String addNewDoctor(Model model) {
-        Doctor doctor = new Doctor();
+        Users doctor = new Users();
         model.addAttribute("doctor", doctor);
-        List<String> listDepartments = Arrays.asList("Primary Physician", "Cardiology", "Orthopedic","Pediatric");
+        List<String> listDepartments = Arrays.asList("Primary Physician","Cardiology", "Orthopedic","Pediatric","Neurology");
         model.addAttribute("listDepartments", listDepartments);
         log.info("New Doctor addition");
         return "add-doctor";
     }
+
     @PostMapping("/doctors/saveorupdatedoctor")
-    public String saveUpdateDoctor(RedirectAttributes model, @ModelAttribute("doctor") Doctor doctor){
-        doctorService.saveOrUpdate(doctor);
+    public String saveUpdateDoctor(RedirectAttributes model, @ModelAttribute("doctor") Users doctor){
+        userService.saveOrUpdate(doctor);
         log.info("New Doctor added successfully");
         return "redirect:/doctors";
     }
 
     @GetMapping("/doctors/edit/{id}")
     public String showUpdateDoctorForm(@PathVariable("id") long id, Model model) {
-        Doctor doctor = doctorService.findById(id)
+        Users doctor = userService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid doctor Id:" + id));
 
         model.addAttribute("doctor", doctor);
-        List<String> listDepartments = Arrays.asList("Primary Physician", "Cardiology", "Orthopedic","Pediatric");
+        List<String> listDepartments = Arrays.asList("Primary Physician", "Cardiology", "Orthopedic","Pediatric","Neurology");
         model.addAttribute("listDepartments", listDepartments);
         log.info("in showUpdateDoctorForm ()");
         return "add-doctor";
     }
-*//*    @PostMapping("/doctors/update/{id}")
-    public String updateDoctor(@PathVariable("id") long id,
-                               BindingResult result, Model model) {
-        Doctor doctor = doctorService.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid doctor Id:" + id));
-        if (result.hasErrors()) {
-            doctor.setId(id);
-            return "add-doctor";
-        }
-
-        doctorService.saveOrUpdate(doctor);
-        log.info("in updateDoctor()");
-        return "redirect:/doctors";
-    }*//*
 
     @GetMapping("/doctors/delete/{id}")
     public String deleteDoctor(@PathVariable("id") long id, Model model) {
-        Doctor doctor = doctorService.findById(id)
+        Users doctor = userService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid doctor Id:" + id));
-        doctorService.delete(doctor);
+        userService.delete(doctor);
         return "redirect:/doctors";
     }
 
 
-    *//*****Admin controllers for Appointments*******//*
+    /*****Admin controllers for Appointments*******//*
 
     @GetMapping("/appointments")
     public String getAllAppointments(Model model) {
