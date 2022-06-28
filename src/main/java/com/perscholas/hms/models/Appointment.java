@@ -40,7 +40,6 @@ public class Appointment {
     boolean isComplete;
 
 
-
     @ManyToMany(mappedBy = "appointments", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH},fetch = FetchType.EAGER)
     private Set<Users> users = new LinkedHashSet<>();
 

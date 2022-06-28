@@ -142,19 +142,20 @@ public class AdminController {
     }
 
 
-    /*****Admin controllers for Appointments*******//*
+    /*****Admin controllers for Appointments*******/
 
     @GetMapping("/appointments")
     public String getAllAppointments(Model model) {
         log.info("Appointment list displayed");
         model.addAttribute("appointments", appointmentService.findAll());
+         appointmentService.findAll();
         return "appointments";
     }
     @GetMapping("/appointments/addNewAppointment")
     public String addNewAppointment(Model model) {
         Appointment appointment = new Appointment();
         model.addAttribute("appointments", appointment);
-        List<Doctor> listDoctors = doctorService.findAll();
+        List<Users> listDoctors = userService.findAllDoctors();
         model.addAttribute("doctors", listDoctors);
         log.info("New Appointment addition");
         return "add-appointments";
@@ -163,12 +164,12 @@ public class AdminController {
     public String makeAppointment(@PathVariable("id") long id,Model model,RedirectAttributes redirect) {
         Appointment appointment = new Appointment();
         model.addAttribute("appointments", appointment);
-        Patient p=patientService.findById(id).orElseThrow();
+        Users p=userService.findById(id).orElseThrow();
        // patientService.addAppointment(id,appointment);
         model.addAttribute("patient", p);
-        List<Doctor> listDoctors = doctorService.findAll();
+        List<Users> listDoctors = userService.findAllDoctors();
         model.addAttribute("doctors", listDoctors);
-        redirect.addFlashAttribute("patientId",id);
+        //redirect.addFlashAttribute("patientId",id);
         log.info("New Appointment addition from patients view");
         return "add-appointments";
     }
@@ -176,7 +177,7 @@ public class AdminController {
     @PostMapping("/appointments/saveorupdateappointment")
     public String saveUpdateAppointment(RedirectAttributes model, @ModelAttribute("appointments") Appointment appointment) throws NoSuchElementException {
 
-        *//*appointmentService.saveOrUpdate(appointment);
+        /*appointmentService.saveOrUpdate(appointment);
         String patientName=appointment.getPatientName();
         log.info(patientName);
         String doctorName=appointment.getDoctorName();
@@ -187,12 +188,9 @@ public class AdminController {
         doctorService.addAppointment(d1.orElseThrow().getId(),appointment);
 
         log.info("New Appointment added successfully");
-        return "redirect:/appointments";*//*
+        return "redirect:/appointments";*/
 
-
-
-
-        appointmentService.saveOrUpdate(appointment);
+     /*   appointmentService.saveOrUpdate(appointment);
         String patientName = appointment.getPatientName();
         String doctorName = appointment.getDoctorName();
         log.info(patientName);
@@ -204,9 +202,12 @@ public class AdminController {
         log.info(appointment.toString());
         appointmentService.saveOrUpdate(appointment);
         log.info("New Appointment added successfully");
+        return "redirect:/appointments";*/
+        appointmentService.saveOrUpdate(appointment);
         return "redirect:/appointments";
 
     }
+    /*
     @PostMapping("/appointments/saveorupdateappointment/{id}")
     public String saveAppointment(@ModelAttribute("patientId") Object flashAttribute, @ModelAttribute("appointments") Appointment appointment) throws NoSuchElementException{
         String patientName = appointment.getPatientName();

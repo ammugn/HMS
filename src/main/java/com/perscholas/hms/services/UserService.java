@@ -44,8 +44,7 @@ public class UserService {
         userRepository.save(u);
 
     }
-    public Optional<Users
-            > findById(long id)
+    public Optional<Users> findById(long id)
     {
         return userRepository.findById(id);
     }
@@ -72,5 +71,9 @@ public class UserService {
         user.removeAppointment(appointment);
         //  appointmentRepository.delete(appointment);
         userRepository.save(user);
+    }
+    public Users findByEmail(String email){
+
+        return userRepository.findByEmail(email);
     }
 }

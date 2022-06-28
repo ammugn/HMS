@@ -6,6 +6,7 @@ import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,6 +46,17 @@ public class AppointmentService {
 
     }
 
+    public String findPatientNameForAppointments(String email) {
+        return appointmentRepository.findPatientNameForAppointments(email);
+    }
+
+
+
+    public String findDoctorNameForAppointments(String email){
+        return appointmentRepository.findDoctorNameForAppointments(email);
+
+}
+
 /*    public List<Appointment> getPatientAppointments(String name){
 
         return appointmentRepository.findPatientAppointments(name);
@@ -53,4 +65,6 @@ public class AppointmentService {
 
         return appointmentRepository.findDoctorAppointments(name);
     }*/
+
+
 }

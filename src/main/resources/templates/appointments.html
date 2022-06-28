@@ -37,8 +37,8 @@
         <thead>
         <tr>
             <th scope="col">Appointment ID</th>
-            <th scope="col">Patient Name</th>
-            <th scope="col">Consulting Doctor</th>
+            <th scope="col">Patient Email</th>
+            <th scope="col">Consulting Doctor Email</th>
             <th scope="col">Date/Time</th>
             <th scope="col">Issue</th>
             <th scope="col">Diagnosis</th>
@@ -49,8 +49,8 @@
         <tbody>
         <tr th:each="appointment: ${appointments}">
             <th scope="row" th:text="${appointment.id}"></th>
-            <td th:text="${appointment.patientName}"></td>
-            <td th:text="${appointment.doctorName}"></td>
+            <td th:text="${appointment.patientEmail}"></td>
+            <td th:text="${appointment.doctorEmail}"></td>
             <td th:text="${appointment.appointmentDate}+' '+${appointment.appointmentTime}"></td>
             <td th:text="${appointment.issue}"></td>
             <td th:text="${appointment.diagnosis}"></td>

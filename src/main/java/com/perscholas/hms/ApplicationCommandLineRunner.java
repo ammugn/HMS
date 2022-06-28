@@ -46,7 +46,7 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
         //Populating Patient data
         Users patient1=new Users("Ammu Nair","ammugn@gmail.com", "password","1988-12-05","Mill Creek,WA");
         patient1.setInsurance("Aetna");
-        patient1.addAppointment(new Appointment("ammugn@gmail.com","ghouse@gmail.com","fever","flu","2022-08-7","10:00",false));
+      //  patient1.addAppointment(new Appointment("ammugn@gmail.com","ghouse@gmail.com","fever","flu","2022-08-7","10:00",false));
         Users patient2=new Users("Emma Morgan","emma@gmail.com", "password","1999-05-20","Mill Creek,WA");
         patient2.setInsurance("Cigna");
         Users patient3=new Users("John Doe","john@gmail.com", "password","1988-12-05","Mill Creek,WA");
@@ -60,10 +60,12 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
         userRepository.save(doctor1);
 
         //Populating Appointment data
-     //   Appointment appointment1=new Appointment("ammugn@gmail.com","ghouse@gmail.com","fever","flu","2022-08-7","10:00",false);
-      //  appointmentService.saveOrUpdate(appointment1);
-     //     appointment1.addUsers(patient1);
-      //    appointmentRepository.save(appointment1);
+        Appointment appointment1=new Appointment("ammugn@gmail.com","ghouse@gmail.com","fever","flu","2022-08-7","10:00",false);
+        appointmentService.saveOrUpdate(appointment1);
+        appointment1.addUsers(patient1);
+       // appointment1.addUsers(doctor1);
+      //  userService.addAppointment(patient1.getId(),appointment1);
+        appointmentService.saveOrUpdate(appointment1);
         /*Appointment appointment1=new Appointment("Ammu Nair","Gregory House","fever","flu","2022-23-06","10:00",true);
 
         appointmentService.saveOrUpdate(appointment1);
@@ -72,10 +74,6 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
         appointmentService.saveOrUpdate(appointment1);*/
 
 
-      //  patientService.addAppointment(101L,appointmentService.findById(1));
-     //   doctorService.addAppointment(201L,appointmentService.findById(1));
-
-       // studentService.addCourse(JAFERID, courseService.findById(1));
     }
 }
 
