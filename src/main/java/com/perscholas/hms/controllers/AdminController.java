@@ -177,50 +177,43 @@ public class AdminController {
     @PostMapping("/appointments/saveorupdateappointment")
     public String saveUpdateAppointment(RedirectAttributes model, @ModelAttribute("appointments") Appointment appointment) throws NoSuchElementException {
 
-        /*appointmentService.saveOrUpdate(appointment);
-        String patientName=appointment.getPatientName();
-        log.info(patientName);
-        String doctorName=appointment.getDoctorName();
-        log.info(patientName);
-        Optional<Patient> p1= patientService.findByName(patientName);
-                Optional<Doctor> d1=doctorService.findByName(doctorName);
-        patientService.addAppointment(p1.orElseThrow().getId(),appointment);
-        doctorService.addAppointment(d1.orElseThrow().getId(),appointment);
-
-        log.info("New Appointment added successfully");
-        return "redirect:/appointments";*/
-
-     /*   appointmentService.saveOrUpdate(appointment);
-        String patientName = appointment.getPatientName();
-        String doctorName = appointment.getDoctorName();
-        log.info(patientName);
-        Optional<Patient> p1 = patientService.findByName(patientName);
-        Optional<Doctor> d1 = doctorService.findByName(doctorName);
-        log.info(p1.get().getId()+" "+p1.get().getName());
-        appointment.setDoctor(d1.get());
-        appointment.setPatient(p1.get());
-        log.info(appointment.toString());
         appointmentService.saveOrUpdate(appointment);
+
+        // patientService.addAppointment(id,appointment);
+
+        String patientEmail=appointment.getPatientEmail();
+        log.info(patientEmail);
+        String doctorEmail=appointment.getDoctorEmail();
+        log.info(doctorEmail);
+        Users p1=userService.findByEmail(patientEmail);
+        model.addAttribute("patient", p1);
+        Users d1=userService.findByEmail(doctorEmail);
+        userService.addAppointment(p1.getId(),appointment);
+        userService.addAppointment(d1.getId(),appointment);
+
         log.info("New Appointment added successfully");
-        return "redirect:/appointments";*/
+
         appointmentService.saveOrUpdate(appointment);
         return "redirect:/appointments";
 
     }
-    /*
-    @PostMapping("/appointments/saveorupdateappointment/{id}")
-    public String saveAppointment(@ModelAttribute("patientId") Object flashAttribute, @ModelAttribute("appointments") Appointment appointment) throws NoSuchElementException{
-        String patientName = appointment.getPatientName();
-        String doctorName = appointment.getDoctorName();
-        Optional<Patient> p1 = patientService.findByName(patientName);
-        Optional<Doctor> d1 = doctorService.findByName(doctorName);
-        appointment.setDoctor(d1.orElseThrow());
-        appointment.setPatient(p1.orElseThrow());
-        appointmentService.saveOrUpdate(appointment);
-        patientService.addAppointment(p1.orElseThrow().getId(), appointment);
-        doctorService.addAppointment(d1.orElseThrow().getId(), appointment);
 
-        log.info("New Appointment added successfully from patients view");
+    @PostMapping("/appointments/saveorupdateappointment/{id}")
+    public String saveAppointment(@ModelAttribute("patientId") Object flashAttribute, @ModelAttribute("appointments") Appointment appointment,RedirectAttributes model) throws NoSuchElementException{
+        appointmentService.saveOrUpdate(appointment);
+        String patientEmail=appointment.getPatientEmail();
+        log.info(patientEmail);
+        String doctorEmail=appointment.getDoctorEmail();
+        log.info(doctorEmail);
+        Users p1=userService.findByEmail(patientEmail);
+        model.addAttribute("patient", p1);
+        Users d1=userService.findByEmail(doctorEmail);
+        userService.addAppointment(p1.getId(),appointment);
+        userService.addAppointment(d1.getId(),appointment);
+
+        log.info("New Appointment added successfully");
+
+        appointmentService.saveOrUpdate(appointment);
         return "redirect:/appointments";
     }
 
@@ -231,11 +224,14 @@ public class AdminController {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid appointment Id:" + id));
 
         model.addAttribute("appointments", appointment);
-        List<Doctor> listDoctors = doctorService.findAll();
+        List<Users> listDoctors = userService.findAllDoctors();
         model.addAttribute("doctors", listDoctors);
+        Users p=userService.findById(id).orElseThrow();
+        // patientService.addAppointment(id,appointment);
+        model.addAttribute("patient", p);
         return "add-appointments";
     }
-*//*    @PostMapping("/appointments/update/{id}")
+/*    @PostMapping("/appointments/update/{id}")
     public String updateAppointment(@PathVariable("id") long id,
                                BindingResult result, Model model) {
         Appointment appointment = appointmentService.findById(id)
@@ -247,20 +243,20 @@ public class AdminController {
 
         appointmentService.saveOrUpdate(appointment);
         return "redirect:/appointments";
-    }*//*
+    }*/
 
     @GetMapping("/appointments/delete/{id}")
     public String deleteAppointments(@PathVariable("id") long id, Model model) {
         Appointment appointment = appointmentService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid appoinment Id:" + id));
-        String patientName = appointment.getPatientName();
-        String doctorName = appointment.getDoctorName();
-        Optional<Patient> p1 = patientService.findByName(patientName);
-        Optional<Doctor> d1 = doctorService.findByName(doctorName);
-        patientService.removeAppointment(p1.get().getId(), appointment);
-        doctorService.removeAppointment(d1.get().getId(), appointment);
+        String patientEmail = appointment.getPatientEmail();
+        String doctorEmail = appointment.getDoctorEmail();
+        Users p1 = userService.findByEmail(patientEmail);
+        Users d1 = userService.findByEmail(doctorEmail);
+        userService.removeAppointment(p1.getId(), appointment);
+        userService.removeAppointment(d1.getId(), appointment);
          appointmentService.delete(appointment);
 
         return "redirect:/appointments";
-    }*/
+    }
 }
