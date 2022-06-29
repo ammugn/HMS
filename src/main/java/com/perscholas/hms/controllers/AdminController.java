@@ -151,25 +151,23 @@ public class AdminController {
          appointmentService.findAll();
         return "appointments";
     }
-    @GetMapping("/appointments/addNewAppointment")
-    public String addNewAppointment(Model model) {
-        Appointment appointment = new Appointment();
-        model.addAttribute("appointments", appointment);
-        List<Users> listDoctors = userService.findAllDoctors();
-        model.addAttribute("doctors", listDoctors);
-        log.info("New Appointment addition");
-        return "add-appointments";
-    }
+//    @GetMapping("/appointments/addNewAppointment")
+//    public String addNewAppointment(Model model) {
+//        Appointment appointment = new Appointment();
+//        model.addAttribute("appointments", appointment);
+//        List<Users> listDoctors = userService.findAllDoctors();
+//        model.addAttribute("doctors", listDoctors);
+//        log.info("New Appointment addition");
+//        return "add-appointments";
+//    }
     @GetMapping("/appointments/addNewAppointment/{id}")
     public String makeAppointment(@PathVariable("id") long id,Model model,RedirectAttributes redirect) {
         Appointment appointment = new Appointment();
         model.addAttribute("appointments", appointment);
         Users p=userService.findById(id).orElseThrow();
-       // patientService.addAppointment(id,appointment);
         model.addAttribute("patient", p);
         List<Users> listDoctors = userService.findAllDoctors();
         model.addAttribute("doctors", listDoctors);
-        //redirect.addFlashAttribute("patientId",id);
         log.info("New Appointment addition from patients view");
         return "add-appointments";
     }
@@ -178,9 +176,7 @@ public class AdminController {
     public String saveUpdateAppointment(RedirectAttributes model, @ModelAttribute("appointments") Appointment appointment) throws NoSuchElementException {
 
         appointmentService.saveOrUpdate(appointment);
-
         // patientService.addAppointment(id,appointment);
-
         String patientEmail=appointment.getPatientEmail();
         log.info(patientEmail);
         String doctorEmail=appointment.getDoctorEmail();
@@ -189,17 +185,19 @@ public class AdminController {
         model.addAttribute("patient", p1);
         Users d1=userService.findByEmail(doctorEmail);
         userService.addAppointment(p1.getId(),appointment);
-        userService.addAppointment(d1.getId(),appointment);
+     //   userService.addAppointment(d1.getId(),appointment);
 
         log.info("New Appointment added successfully");
-
-        appointmentService.saveOrUpdate(appointment);
+        log.info(String.valueOf(appointmentService.findById(appointment.getId())));
+       //  model.addAttribute("appointments",appointmentService.findById(appointment.getId()).orElseThrow());
+        //appointmentService.saveOrUpdate(appointment);
         return "redirect:/appointments";
 
     }
 
+    //saveorupdateappointment/{id} not used
     @PostMapping("/appointments/saveorupdateappointment/{id}")
-    public String saveAppointment(@ModelAttribute("patientId") Object flashAttribute, @ModelAttribute("appointments") Appointment appointment,RedirectAttributes model) throws NoSuchElementException{
+    public String saveAppointment(@PathVariable("id") long id,@ModelAttribute("patientId") Object flashAttribute, @ModelAttribute("appointments") Appointment appointment,RedirectAttributes model) throws NoSuchElementException{
         appointmentService.saveOrUpdate(appointment);
         String patientEmail=appointment.getPatientEmail();
         log.info(patientEmail);
@@ -222,11 +220,11 @@ public class AdminController {
     public String showUpdateAppointmentForm(@PathVariable("id") long id, Model model) {
         Appointment appointment = appointmentService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid appointment Id:" + id));
-
         model.addAttribute("appointments", appointment);
         List<Users> listDoctors = userService.findAllDoctors();
         model.addAttribute("doctors", listDoctors);
-        Users p=userService.findById(id).orElseThrow();
+        String patientEmail=appointment.getPatientEmail();
+        Users p=userService.findByEmail(patientEmail);
         // patientService.addAppointment(id,appointment);
         model.addAttribute("patient", p);
         return "add-appointments";
@@ -252,11 +250,14 @@ public class AdminController {
         String patientEmail = appointment.getPatientEmail();
         String doctorEmail = appointment.getDoctorEmail();
         Users p1 = userService.findByEmail(patientEmail);
-        Users d1 = userService.findByEmail(doctorEmail);
+      //  Users d1 = userService.findByEmail(doctorEmail);
         userService.removeAppointment(p1.getId(), appointment);
-        userService.removeAppointment(d1.getId(), appointment);
+     //   userService.removeAppointment(d1.getId(), appointment);
          appointmentService.delete(appointment);
 
         return "redirect:/appointments";
+
+
+
     }
 }

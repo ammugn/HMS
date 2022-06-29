@@ -36,7 +36,7 @@
                 <!-- /# column -->
             </div>
             <section id="main-content">
-    <h3>Add New Appointment</h3>
+    <h3>Add / Update Appointment</h3>
     <hr/>
                 <div class="bootstrap-iso">
     <form th:action="@{/appointments/saveorupdateappointment}" th:object="${appointments}" method="POST">
@@ -44,7 +44,7 @@
         <label for="pname" class="col-lg-2 col-form-label">Patient Name</label>
         <input  type="text"  th:value="${patient.name}" class="col-lg-6"  th:name="pname" id="pname" disabled/><br><br>
         <label for="pemail" class="col-lg-2 col-form-label">Patient Email</label>
-        <input  type="text"  th:field="*{patientEmail}" class="col-lg-6" th:name="pemail" id="pemail" /><br><br>
+        <input  type="text"  th:field="*{patientEmail}" class="col-lg-6" th:placeholder= "${patient.email}" th:name="pemail" id="pemail" /><br><br>
         <label for="issue" class="col-lg-2 col-form-label">Issue</label>
         <input  type="text" th:field="*{issue}" class="col-lg-6" placeholder="Enter Reason for consultation" id="issue"/><br><br>
         <label for="date" class="col-lg-2 col-form-label">Appointment Date</label>
@@ -57,10 +57,13 @@
         <select class="col-lg-6 col-form-label" th:field="*{doctorEmail}">
             <option  th:name="dname" id="dname" th:each="d : ${doctors}" th:value="${d.email}" th:text="${d.name}" />
         </select></br>
+        <!--
         <label class="col-lg-2 col-form-label">Appointment Status</label>
-        <!-- Date input -->
+
             <label   for="date2">Date</label>
             <input  id="date2" name="date2" placeholder="MM/DD/YYY" type="text"/>
+
+        -->
 
 
  <!--       <select id="status" name="status" class="col-lg-6 col-form-label" th:field="*{isComplete}">
