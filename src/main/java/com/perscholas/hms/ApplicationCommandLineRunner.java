@@ -47,31 +47,31 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
         Users patient1=new Users("Ammu Nair","ammugn@gmail.com", "password","1988-12-05","Mill Creek,WA");
         patient1.setInsurance("Aetna");
       //  patient1.addAppointment(new Appointment("ammugn@gmail.com","ghouse@gmail.com","fever","flu","2022-08-7","10:00",false));
-        Users patient2=new Users("Emma Morgan","emma@gmail.com", "password","1999-05-20","Mill Creek,WA");
+        Users patient2=new Users("Emma Morgan","emma@gmail.com", "password","1999-05-20","Redmond,WA");
         patient2.setInsurance("Cigna");
-        Users patient3=new Users("John Doe","john@gmail.com", "password","1988-12-05","Mill Creek,WA");
+        Users patient3=new Users("John Doe","john@gmail.com", "password","1978-07-10","Bellevue,WA");
         patient3.setInsurance("United Health");
 
-        Users doctor1=new Users("Gregory House","ghouse@gmail.com", "password","1988-12-05","Mill Creek,WA");
+        Users doctor1=new Users("Gregory House","ghouse@gmail.com", "password","1968-03-05","Seattle,WA");
         doctor1.setDepartment("Primary Physician");
+        Users doctor2=new Users("Meredith Grey","mgrey@gmail.com", "password","1982-05-05","Seattle,WA");
+        doctor2.setDepartment("Cardiology");
+        Users doctor3=new Users("Richard Webber","rwebber@gmail.com", "password","1959-11-22","Seattle,WA");
+        doctor3.setDepartment("Orthopedic");
         userRepository.save(patient1);
         userRepository.save(patient2);
         userRepository.save(patient3);
         userRepository.save(doctor1);
+        userRepository.save(doctor2);
+        userRepository.save(doctor3);
+
 
         //Populating Appointment data
         Appointment appointment1=new Appointment("ammugn@gmail.com","ghouse@gmail.com","fever","flu","2022-08-7","10:00",false);
         appointmentService.saveOrUpdate(appointment1);
         appointment1.addUsers(patient1);
-       // appointment1.addUsers(doctor1);
-      //  userService.addAppointment(patient1.getId(),appointment1);
         appointmentService.saveOrUpdate(appointment1);
-        /*Appointment appointment1=new Appointment("Ammu Nair","Gregory House","fever","flu","2022-23-06","10:00",true);
 
-        appointmentService.saveOrUpdate(appointment1);
-        appointment1.setPatient(patient1);
-        appointment1.setDoctor(doctor1);
-        appointmentService.saveOrUpdate(appointment1);*/
 
 
     }

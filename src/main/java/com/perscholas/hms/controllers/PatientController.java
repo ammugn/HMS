@@ -1,49 +1,64 @@
 package com.perscholas.hms.controllers;
 
+import com.perscholas.hms.models.Users;
+import com.perscholas.hms.services.UserService;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Ammu Nair
  */
-@Controller @Slf4j
+@Controller
+@Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequestMapping
 public class PatientController {
 
-  /*  PatientService patientService;
+    UserService patientService;
     @Autowired
-    public PatientController(PatientService patientService) {
+    public PatientController(UserService patientService) {
         this.patientService = patientService;
     }
 
 
-    @GetMapping("/patients")
-    public String getAllPatients(Model model) {
-        log.info("Patient list displayed");
-        model.addAttribute("patients", patientService.findAll());
-        return "patients";
+    @GetMapping("/medihealth")
+    public String getMediHealthHomepage(Model model) {
+        log.info("MediHealth home page");
+
+        return "medihealth";
     }
-    @GetMapping("/patients/addNewPatient")
-    public String addNewPatient(Model model) {
-        Patient newPatient = new Patient();
+    @GetMapping("/medihealth/login")
+    public String getPatientLogin(Model model) {
+        log.info("MediHealth patient login page");
+
+        return "patient_login";
+    }
+    @GetMapping("/medihealth/registerPatient")
+    public String registerPatient(Model model) {
+        Users newPatient = new Users();
         model.addAttribute("patient", newPatient);
-        List<String> listInsurance = Arrays.asList("Optum", "UnitedHealthCare", "Aetna","Cigna");
+        List<String> listInsurance = Arrays.asList("United Health", "Aetna","Cigna");
         model.addAttribute("listInsurance", listInsurance);
-        log.info("New Patient addition");
-        return "add-patient";
+        log.info("New Patient registration page");
+        return "patient_registration";
     }
-    @PostMapping("/patients/saveorupdatepatient")
-    public String saveUpdatePatient(RedirectAttributes model, @ModelAttribute("patient") Patient patient){
+    @PostMapping("/medihealth/savePatient")
+    public String savePatient(RedirectAttributes model, @ModelAttribute("patient") Users patient){
         patientService.saveOrUpdate(patient);
-        log.info("New Patient added successfully");
-        return "redirect:/patients";
+        log.info("New Patient registered successfully");
+        return "redirect:/medihealth/login";
 
     }
-    @GetMapping("/patients/edit/{id}")
+   /* @GetMapping("/patients/edit/{id}")
     public String showUpdateForm(@PathVariable("id") long id, Model model) {
         Patient patient = patientService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid patient Id:" + id));

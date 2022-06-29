@@ -247,12 +247,12 @@ public class AdminController {
     public String deleteAppointments(@PathVariable("id") long id, Model model) {
         Appointment appointment = appointmentService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid appoinment Id:" + id));
-        String patientEmail = appointment.getPatientEmail();
+      /*  String patientEmail = appointment.getPatientEmail();
         String doctorEmail = appointment.getDoctorEmail();
         Users p1 = userService.findByEmail(patientEmail);
         Users d1 = userService.findByEmail(doctorEmail);
         userService.removeAppointment(p1.getId(), appointment);
-        userService.removeAppointment(d1.getId(), appointment);
+        userService.removeAppointment(d1.getId(), appointment);*/
          appointmentService.delete(appointment);
 
         return "redirect:/appointments";
