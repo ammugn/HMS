@@ -48,7 +48,7 @@ public class Users {
             inverseJoinColumns = @JoinColumn(name = "appointments_id"))
     private Set<Appointment> appointments = new LinkedHashSet<>();
 
-    public void addAppointment(Appointment appointment){
+  /*  public void addAppointment(Appointment appointment){
         appointments.add(appointment);
         appointment.getUsers().add(this);
     }
@@ -56,5 +56,5 @@ public class Users {
     public void removeAppointment(Appointment appointment) {
         appointments.remove(appointment);
         appointment.setUsers(null);
-    }
+    }*/
 }

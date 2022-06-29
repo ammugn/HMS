@@ -250,9 +250,9 @@ public class AdminController {
         String patientEmail = appointment.getPatientEmail();
         String doctorEmail = appointment.getDoctorEmail();
         Users p1 = userService.findByEmail(patientEmail);
-      //  Users d1 = userService.findByEmail(doctorEmail);
+        Users d1 = userService.findByEmail(doctorEmail);
         userService.removeAppointment(p1.getId(), appointment);
-     //   userService.removeAppointment(d1.getId(), appointment);
+        userService.removeAppointment(d1.getId(), appointment);
          appointmentService.delete(appointment);
 
         return "redirect:/appointments";

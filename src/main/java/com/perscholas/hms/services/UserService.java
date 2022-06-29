@@ -62,13 +62,13 @@ public class UserService {
 
         Users user = userRepository.findById(id).orElseThrow();
         appointment = appointmentRepository.save(appointment);
-        user.addAppointment(appointment);
+      //  user.addAppointment(appointment);
         userRepository.save(user);
     }
     public void removeAppointment(Long id, Appointment appointment) throws NoSuchElementException {
 
         Users user = userRepository.findById(id).orElseThrow();
-        user.removeAppointment(appointment);
+    //    user.removeAppointment(appointment);
         //  appointmentRepository.delete(appointment);
         userRepository.save(user);
     }
