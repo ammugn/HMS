@@ -1,0 +1,106 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>🩺MediHealth</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/css/lib/themify-icons.css" rel="stylesheet">
+    <link href="/css/lib/owl.carousel.min.css" rel="stylesheet" />
+    <link href="/css/lib/owl.theme.default.min.css" rel="stylesheet" />
+    <link href="/css/lib/weather-icons.css" rel="stylesheet" />
+    <link href="/css/lib/menubar/sidebar.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/lib/helper.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/lib/datepicker/bootstrap-datepicker3.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<!--    <link href="/css/mystyle.css" rel="stylesheet">-->
+<!--    <script src="/js/register.js"></script>-->
+</head>
+
+
+
+
+<body>
+
+<div class="sidebar sidebar-hide-to-small sidebar-shrink sidebar-gestures">
+    <div class="nano">
+        <div class="nano-content">
+            <ul>
+                <div class="logo">
+                    <li>  <img src="/images/meditechlogo2.png" style="width:100px;height:100px"></a> </li>
+                    <h2 class="logo">MediHealth</h2>
+                    <li><a th:href="@{/medihealth/patientDashboard}"><i class="ti-home"></i>Dashboard</a></li>
+                    <li><a th:object="${loggedpatient}" th:href="@{/medihealth/viewAppointments/{id}(id=${loggedpatient.id})}"><i class="ti-clock"></i> View Appoinments</a></li>
+                    <li><a th:href="@{/medihealth/patientDashboard}"><i class="ti-file"></i> Reports</a></li>
+                    <li><a th:href="@{/medihealth/bookAppointment/{id}(id=${loggedpatient.id})}"><i class="ti-credit-card"></i> Make New Appointment</a></li>
+                    <li><a href="#"><i class="ti-close"></i> Logout</a></li>
+                </div>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+    <div class="content-wrap">
+        <div class="main">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-8 p-r-0 title-margin-right">
+                        <div class="page-header">
+                            <div class="page-title">
+                                <h1>Hello, <span th:text="${loggedpatient.name}"></span> Welcome to MediHealth!</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /# column -->
+                    <div class="col-lg-4 p-l-0 title-margin-left">
+                        <div class="page-header">
+                            <div class="page-title">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                                    <li class="breadcrumb-item active">Home</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /# column -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.js"></script>
+<script src="/js/lib/jquery.nanoscroller.min.js"></script>
+<!-- nano scroller -->
+<script src="js/lib/menubar/sidebar.js"></script>
+<script src="js/lib/preloader/pace.min.js"></script>
+<!-- sidebar -->
+
+<script src="/js/lib/bootstrap.min.js"></script>
+<script src="/js/scripts.js"></script>
+<!-- bootstrap -->
+
+<script src="/js/lib/calendar-2/moment.latest.min.js"></script>
+<script src="/js/lib/calendar-2/pignose.calendar.min.js"></script>
+<script src="/js/lib/calendar-2/pignose.init.js"></script>
+<script src="/js/lib/datepicker/bootstrap-datepicker.min.js"></script>
+<script src="/js/lib/weather/jquery.simpleWeather.min.js"></script>
+<script src="/js/lib/weather/weather-init.js"></script>
+<script src="/js/lib/circle-progress/circle-progress.min.js"></script>
+<script src="/js/lib/circle-progress/circle-progress-init.js"></script>
+<script src="/js/lib/chartist/chartist.min.js"></script>
+<script src="/js/lib/sparklinechart/jquery.sparkline.min.js"></script>
+<script src="/js/lib/sparklinechart/sparkline.init.js"></script>
+<script src="/js/lib/owl-carousel/owl.carousel.min.js"></script>
+<script src="/js/lib/owl-carousel/owl.carousel-init.js"></script>
+<!-- scripit init-->
+<script src="/js/dashboard2.js"></script>
+
+</body>
+</html>

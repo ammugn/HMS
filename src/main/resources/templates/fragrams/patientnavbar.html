@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<nav th:fragment="pnavbar" class="sidebar sidebar-hide-to-small sidebar-shrink sidebar-gestures">
+    <div class="sidebar sidebar-hide-to-small sidebar-shrink sidebar-gestures">
+        <div class="nano">
+            <div class="nano-content">
+                <ul>
+                    <div class="logo">
+                        <!--                        <li>  <img src="/images/meditechlogo2.png" style="width:100px;height:100px"></a> </li>-->
+                        <li><a th:href="@{/medihealth/patientDashboard}"><i class="ti-home"></i>Dashboard</a></li>
+                        <li><a th:object="${patient}" th:href="@{/medihealth/viewAppointments/{id}(id=${loggedpatient.id})}"><i class="ti-clock"></i> View Appoinments</a></li>
+                        <li><a th:href="@{/medihealth/patientDashboard}"><i class="ti-file"></i> Reports</a></li><!--ti-clipboard-->
+                        <li><a href="@{/medihealth/bookAppointment/{id}(id=${loggedpatient.id})}"><i class="ti-credit-card"></i> Make New Appointment</a></li>
+                        <!--   <span-->
+                        <!--                        class="sidebar-collapse-icon ti-angle-down"></span></a></li>-->
+                        <li><a href="#"><i class="ti-close"></i> Logout</a></li>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+</body>
+</html>

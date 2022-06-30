@@ -1,6 +1,8 @@
 package com.perscholas.hms.controllers;
 
+import com.perscholas.hms.models.Appointment;
 import com.perscholas.hms.models.Users;
+import com.perscholas.hms.services.AppointmentService;
 import com.perscholas.hms.services.UserService;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -13,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * @author Ammu Nair
@@ -24,23 +27,16 @@ import java.util.List;
 public class PatientController {
 
     UserService patientService;
+    AppointmentService appointmentService;
     @Autowired
-    public PatientController(UserService patientService) {
+    public PatientController(UserService patientService,  AppointmentService appointmentService) {
         this.patientService = patientService;
+        this.appointmentService=appointmentService;
     }
-
-
     @GetMapping("/medihealth")
-    public String getMediHealthHomepage(Model model) {
+    public String getMediHealthHomepage() {
         log.info("MediHealth home page");
-
         return "medihealth";
-    }
-    @GetMapping("/medihealth/login")
-    public String getPatientLogin(Model model) {
-        log.info("MediHealth patient login page");
-
-        return "patient_login";
     }
     @GetMapping("/medihealth/registerPatient")
     public String registerPatient(Model model) {
@@ -56,37 +52,57 @@ public class PatientController {
         patientService.saveOrUpdate(patient);
         log.info("New Patient registered successfully");
         return "redirect:/medihealth/login";
-
     }
-   /* @GetMapping("/patients/edit/{id}")
-    public String showUpdateForm(@PathVariable("id") long id, Model model) {
-        Patient patient = patientService.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid patient Id:" + id));
-
-        model.addAttribute("patient", patient);
-        List<String> listInsurance = Arrays.asList("Optum", "UnitedHealthCare", "Aetna","Cigna");
-        model.addAttribute("listInsurance", listInsurance);
-        return "add-patient";
-    }
-    @PostMapping("/patients/update/{id}")
-    public String updateUser(@PathVariable("id") long id,
-                             BindingResult result, Model model) {
-        Patient patient = patientService.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid patient Id:" + id));
-        if (result.hasErrors()) {
-            patient.setId(id);
-            return "add-patient";
-        }
-
-        patientService.saveOrUpdate(patient);
-        return "redirect:/patients";
+    @GetMapping("/medihealth/login")
+    public String getPatientLogin(Model model) {
+        log.info("MediHealth patient login page");
+        Users newPatient = new Users();
+        model.addAttribute("patient", newPatient);
+        return "patient_login";
     }
 
-    @GetMapping("/patients/delete/{id}")
-    public String deletePatient(@PathVariable("id") long id, Model model) {
-        Patient patient = patientService.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid patient Id:" + id));
-        patientService.delete(patient);
-        return "redirect:/patients";
-    }*/
+    @PostMapping("/medihealth/patientDashboard")  //"/medihealth/patientDashboard/{id}"
+    public String showPatientDashboard(Model model,@ModelAttribute("patient") Users patient){
+        Users p=patientService.findByEmail(patient.getEmail());
+        log.info(p.getEmail()+" logged in with id "+p.getId());
+        model.addAttribute("loggedpatient", p);
+        return "patient_dashboard";
+    }
+
+    @GetMapping("/medihealth/bookAppointment/{id}")
+    public String makeNewAppointment(Model model,@PathVariable("id") long id){
+        Appointment appointment = new Appointment();
+        model.addAttribute("appointments", appointment);
+        Users p=patientService.findById(id).orElseThrow();
+        model.addAttribute("patient", p);
+        List<Users> listDoctors = patientService.findAllDoctors();
+        model.addAttribute("doctors", listDoctors);
+        log.info("New Appointment addition from patient dashboard");
+        return "patient-newappointment";
+
+
+    }
+    @PostMapping("/medihealth/saveorupdateappointment")
+    public String saveUpdateAppointment(RedirectAttributes model, @ModelAttribute("appointments") Appointment appointment) throws NoSuchElementException {
+
+
+        appointmentService.saveOrUpdate(appointment);
+        // patientService.addAppointment(id,appointment);
+        String patientEmail=appointment.getPatientEmail();
+        log.info(patientEmail);
+        String doctorEmail=appointment.getDoctorEmail();
+        log.info(doctorEmail);
+        Users p1=patientService.findByEmail(patientEmail);
+        model.addAttribute("patient", p1);
+        Users d1=patientService.findByEmail(doctorEmail);
+        patientService.addAppointment(p1.getId(),appointment);
+        //   userService.addAppointment(d1.getId(),appointment);
+
+        log.info("New Appointment added successfully");
+        log.info(String.valueOf(appointmentService.findById(appointment.getId()).get().getPatientEmail()));
+        //  model.addAttribute("appointments",appointmentService.findById(appointment.getId()).orElseThrow());
+        //appointmentService.saveOrUpdate(appointment);
+        return "patient_dashboard";
+
+    }
 }

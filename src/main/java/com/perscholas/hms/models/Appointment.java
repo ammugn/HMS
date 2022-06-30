@@ -37,7 +37,7 @@ public class Appointment {
     @NonNull
     String appointmentTime;
     @NonNull
-    boolean isComplete;
+    boolean isComplete;//pass isComplete as hidden field
 
 
     @ManyToMany(mappedBy = "appointments", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH},fetch = FetchType.EAGER)

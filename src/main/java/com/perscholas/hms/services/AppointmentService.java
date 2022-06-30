@@ -42,7 +42,7 @@ public class AppointmentService {
     }
 
     public void delete(Appointment a) {
-        appointmentRepository.delete(a);
+        appointmentRepository.deleteById(a.getId());
 
     }
 

@@ -1,0 +1,117 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<div th:replace="fragrams/patientheader :: pheader" />
+
+
+<body>
+<div class="sidebar sidebar-hide-to-small sidebar-shrink sidebar-gestures">
+    <div class="nano">
+        <div class="nano-content">
+            <ul>
+                <div class="logo">
+                    <li>  <img src="/images/meditechlogo2.png" style="width:100px;height:100px"></a> </li>
+                    <h2 class="logo">MediHealth</h2>
+                    <li><a th:href="@{/medihealth/patientDashboard}"><i class="ti-home"></i>Dashboard</a></li>
+                    <li><a th:object="${patient}" th:href="@{/medihealth/viewAppointments/{id}(id=${patient.id})}"><i class="ti-clock"></i> View Appoinments</a></li>
+                    <li><a th:href="@{/medihealth/patientDashboard}"><i class="ti-file"></i> Reports</a></li>
+                    <li><a th:href="@{/medihealth/bookAppointment/{id}(id=${patient.id})}"><i class="ti-credit-card"></i> Make New Appointment</a></li>
+                    <li><a href="#"><i class="ti-close"></i> Logout</a></li>
+                </div>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="content-wrap">
+    <div class="main">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-8 p-r-0 title-margin-right">
+                    <div class="page-header">
+                        <div class="page-title">
+                            <h1>Hello, <span th:text="${patient.name}"></span> Welcome to MediHealth!</h1>
+                        </div>
+                    </div>
+                </div>
+                <!-- /# column -->
+                <div class="col-lg-4 p-l-0 title-margin-left">
+                    <div class="page-header">
+                        <div class="page-title">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                                <li class="breadcrumb-item active">Make appointment</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <!-- /# column -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<section id="main-content">
+    <div class="bootstrap-iso">
+<form th:action="@{/medihealth/saveorupdateappointment}" id="registerform" class="registerform" th:object="${appointments}"  method="POST">
+
+    <div class="form-outline mb-2">
+        <label class="form-label">Name</label>
+        <input type="text" id="name" class="form-control" th:value="${patient.name}" disabled/>
+    </div>
+    <div class="form-outline mb-2">
+        <label class="form-label">Your Email</label>
+        <input type="email" id="email" class="form-control" th:field="*{patientEmail}" required/>
+    </div>
+    <div class="form-outline mb-2">
+        <label class="form-label">Issue</label>
+        <input type="text" id="issue" class="form-control" th:field="*{issue}" required/>
+    </div>
+    <div class="form-outline mb-2">
+        <label class="form-label">Appointment Date</label>
+        <input type="text" id="date" name="date" placeholder="MM/DD/YYY" class="form-control" th:field="*{appointmentDate}" required/>
+    </div>
+    <div class="form-outline mb-2">
+        <label class="form-label">Appointment Time</label>
+        <input type="text" id="time" class="form-control" th:field="*{appointmentTime}" required/>
+    </div>
+        <select class="form-select" th:field="*{doctorEmail}">
+            <option th:name="dname" id="dname" th:each="d : ${doctors}" th:value="${d.email}" th:text="${d.name}" />
+        </select>
+    </div>
+    <p id="form-error"></p>
+    <div class="d-flex justify-content-center">
+        <button type="submit" value="Register" class="submit">Submit</button>
+        <input type="hidden" th:field="*{id}" />
+
+
+    </div>
+
+
+</form>
+    </div>
+</section>
+
+<!-- Footer-->
+<div th:replace="fragrams/footer :: footer"/>
+<script>
+
+//for boot strap date picker
+  $(document).ready(function(){
+      var date_input=$('input[name="date"]'); //date picker input has the name "date"
+      var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+      var options={
+      format: 'mm/dd/yyyy',
+        container: container,
+        orientation: "bottom left",
+        daysOfWeekDisabled: "0,6",
+        daysOfWeekHighlighted: "1,2,3,4,5",
+        todayHighlight: true,
+        startDate: '+1d',
+        autoclose: true,
+
+      };
+      date_input.datepicker(options);
+    })
+
+</script>
+
+</body>
+</html>
