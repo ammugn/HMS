@@ -47,6 +47,9 @@ public class Appointment {
        users.add(user);
        user.getAppointments().add(this);
    }
-
+    public void removeUsers(Users user) {
+        users.remove(user);
+        user.setAppointments(null);
+    }
 
 }

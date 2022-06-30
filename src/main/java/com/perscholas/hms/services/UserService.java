@@ -10,6 +10,7 @@ import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -56,7 +57,11 @@ public class UserService {
     }
 
     public void delete(Users users) {
-        userRepository.delete(users);
+       Users currentUser= userRepository.findById(users.getId()).get();
+       currentUser.setAppointments(new HashSet<>());
+       userRepository.save(currentUser);
+       userRepository.deleteById(currentUser.getId());
+
     }
     public void addAppointment(Long id, Appointment appointment) throws NoSuchElementException {
 

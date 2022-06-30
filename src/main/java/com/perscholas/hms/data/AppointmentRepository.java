@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @author Ammu Nair
  */
@@ -17,4 +19,6 @@ public interface AppointmentRepository extends JpaRepository<Appointment,Long> {
 
     @Query(value ="SELECT u.name FROM users u JOIN appointment a on u.email =a.doctor_email",nativeQuery = true)
         String findDoctorNameForAppointments(String email);
+
+    List<Appointment> findByPatientEmail(String email);
 }
