@@ -85,10 +85,12 @@
         <label for="issue" class="col-lg-2 col-form-label">Issue</label>
         <input type="text" id="issue" class="form-control col-lg-6" th:field="*{issue}" required/>
     </div>
-    <div class="form-outline mb-2 input-group date">
+    <div class="form-outline mb-2">
         <label for="date" class="col-lg-2 col-form-label">Appointment Date</label>
-        <input type="text" id="date" name="date" class="form-control col-lg-6" placeholder="MM/DD/YYY"  th:field="*{appointmentDate}" required/>
+        <div class="input-group date">
+        <input type="text" id="date" name="date" class="form-control col-lg-6"   th:field="*{appointmentDate}" required/>
         <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+        </div>
     </div>
     <div class="form-outline mb-2">
         <label for="time" class="col-lg-2 col-form-label">Appointment Time</label>
@@ -148,14 +150,14 @@
 //for boot strap date picker
 <script>
 $('.date').datepicker({
-        format:'yyyy-mm-dd',
+        format:"yyyy-mm-dd",
         daysOfWeekDisabled: "0,6",
         daysOfWeekHighlighted: "1,2,3,4,5",
         todayHighlight: true,
         startDate: '+1d',
         autoclose: true,
-        orientation: bottom-right,
-})
+        orientation: "bottom auto",
+});
 </script>
 
 </body>
