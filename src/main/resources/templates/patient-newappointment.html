@@ -1,5 +1,27 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
-<div th:replace="fragrams/patientheader :: pheader" />
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>🩺MediHealth</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/css/lib/themify-icons.css" rel="stylesheet">
+    <link href="/css/lib/owl.carousel.min.css" rel="stylesheet" />
+    <link href="/css/lib/owl.theme.default.min.css" rel="stylesheet" />
+    <link href="/css/lib/weather-icons.css" rel="stylesheet" />
+    <link href="/css/lib/menubar/sidebar.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/lib/helper.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/lib/datepicker/bootstrap-datepicker3.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!--    <link href="/css/mystyle.css" rel="stylesheet">-->
+    <!--    <script src="/js/register.js"></script>-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+</head>
 
 
 <body>
@@ -8,13 +30,13 @@
         <div class="nano-content">
             <ul>
                 <div class="logo">
-                    <li>  <img src="/images/meditechlogo2.png" style="width:100px;height:100px"></a> </li>
+<!--                    <li>  <img src="/images/meditechlogo2.png" style="width:100px;height:100px"></a> </li>-->
                     <h2 class="logo">MediHealth</h2>
                     <li><a th:href="@{/medihealth/patientDashboard}"><i class="ti-home"></i>Dashboard</a></li>
                     <li><a th:object="${patient}" th:href="@{/medihealth/viewAppointments/{id}(id=${patient.id})}"><i class="ti-clock"></i> View Appoinments</a></li>
                     <li><a th:href="@{/medihealth/patientDashboard}"><i class="ti-file"></i> Reports</a></li>
                     <li><a th:href="@{/medihealth/bookAppointment/{id}(id=${patient.id})}"><i class="ti-credit-card"></i> Make New Appointment</a></li>
-                    <li><a href="#"><i class="ti-close"></i> Logout</a></li>
+                    <li><a th:href="@{/medihealth/patientDashboard/logout}"><i class="ti-close"></i>Logout</a></li>
                 </div>
             </ul>
         </div>
@@ -44,73 +66,96 @@
                 </div>
                 <!-- /# column -->
             </div>
-        </div>
-    </div>
-</div>
+
 
 <section id="main-content">
+
     <div class="bootstrap-iso">
 <form th:action="@{/medihealth/saveorupdateappointment}" id="registerform" class="registerform" th:object="${appointments}"  method="POST">
 
     <div class="form-outline mb-2">
-        <label class="form-label">Name</label>
-        <input type="text" id="name" class="form-control" th:value="${patient.name}" disabled/>
+        <label for="name" class="col-lg-2 col-form-label">Name</label>
+        <input type="text" id="name" class="form-control col-lg-6" th:value="${patient.name}" disabled/>
     </div>
     <div class="form-outline mb-2">
-        <label class="form-label">Your Email</label>
-        <input type="email" id="email" class="form-control" th:field="*{patientEmail}" required/>
+        <label for="email" class="col-lg-2 col-form-label">Your Email</label>
+        <input type="email" id="email" class="form-control col-lg-6" th:field="*{patientEmail}" required/>
     </div>
     <div class="form-outline mb-2">
-        <label class="form-label">Issue</label>
-        <input type="text" id="issue" class="form-control" th:field="*{issue}" required/>
+        <label for="issue" class="col-lg-2 col-form-label">Issue</label>
+        <input type="text" id="issue" class="form-control col-lg-6" th:field="*{issue}" required/>
+    </div>
+    <div class="form-outline mb-2 input-group date">
+        <label for="date" class="col-lg-2 col-form-label">Appointment Date</label>
+        <input type="text" id="date" name="date" class="form-control col-lg-6" placeholder="MM/DD/YYY"  th:field="*{appointmentDate}" required/>
+        <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
     </div>
     <div class="form-outline mb-2">
-        <label class="form-label">Appointment Date</label>
-        <input type="text" id="date" name="date" placeholder="MM/DD/YYY" class="form-control" th:field="*{appointmentDate}" required/>
+        <label for="time" class="col-lg-2 col-form-label">Appointment Time</label>
+        <input type="time" id="time" class="form-control col-lg-6" th:field="*{appointmentTime}" min="09:00" max="17:00" required/><span>hours are from 9:00am to 5:00pm </span>
     </div>
     <div class="form-outline mb-2">
-        <label class="form-label">Appointment Time</label>
-        <input type="text" id="time" class="form-control" th:field="*{appointmentTime}" required/>
-    </div>
-        <select class="form-select" th:field="*{doctorEmail}">
+        <label for="dname" class="col-lg-2 col-form-label">Select Doctor</label>
+        <select class="form-select col-lg-6" th:field="*{doctorEmail}">
             <option th:name="dname" id="dname" th:each="d : ${doctors}" th:value="${d.email}" th:text="${d.name}" />
         </select>
     </div>
     <p id="form-error"></p>
     <div class="d-flex justify-content-center">
-        <button type="submit" value="Register" class="submit">Submit</button>
+        <button type="submit" value="Book Appointment" class="submit">Book Appointment</button>
         <input type="hidden" th:field="*{id}" />
 
-
     </div>
-
-
 </form>
     </div>
 </section>
+        </div>
+    </div>
+</div>
 
-<!-- Footer-->
-<div th:replace="fragrams/footer :: footer"/>
-<script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!--<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.js"></script>-->
+<script src="/js/lib/jquery.nanoscroller.min.js"></script>
+<!-- nano scroller -->
+<script src="js/lib/menubar/sidebar.js"></script>
+<script src="js/lib/preloader/pace.min.js"></script>
+<!-- sidebar -->
+
+<script src="/js/lib/bootstrap.min.js"></script>
+<script src="/js/scripts.js"></script>
+<!-- bootstrap -->
+
+<script src="/js/lib/calendar-2/moment.latest.min.js"></script>
+<script src="/js/lib/calendar-2/pignose.calendar.min.js"></script>
+<script src="/js/lib/calendar-2/pignose.init.js"></script>
+<script src="/js/lib/datepicker/bootstrap-datepicker.min.js"></script>
+<script src="/js/lib/weather/jquery.simpleWeather.min.js"></script>
+<script src="/js/lib/weather/weather-init.js"></script>
+<script src="/js/lib/circle-progress/circle-progress.min.js"></script>
+<script src="/js/lib/circle-progress/circle-progress-init.js"></script>
+<script src="/js/lib/chartist/chartist.min.js"></script>
+<script src="/js/lib/sparklinechart/jquery.sparkline.min.js"></script>
+<script src="/js/lib/sparklinechart/sparkline.init.js"></script>
+<script src="/js/lib/owl-carousel/owl.carousel.min.js"></script>
+<script src="/js/lib/owl-carousel/owl.carousel-init.js"></script>
+<!-- scripit init-->
+<script src="/js/dashboard2.js"></script>
+
 
 //for boot strap date picker
-  $(document).ready(function(){
-      var date_input=$('input[name="date"]'); //date picker input has the name "date"
-      var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
-      var options={
-      format: 'mm/dd/yyyy',
-        container: container,
-        orientation: "bottom left",
+<script>
+$('.date').datepicker({
+        format:'yyyy-mm-dd',
         daysOfWeekDisabled: "0,6",
         daysOfWeekHighlighted: "1,2,3,4,5",
         todayHighlight: true,
         startDate: '+1d',
         autoclose: true,
-
-      };
-      date_input.datepicker(options);
-    })
-
+        orientation: bottom-right,
+})
 </script>
 
 </body>

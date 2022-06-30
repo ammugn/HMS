@@ -38,6 +38,11 @@ public class PatientController {
         log.info("MediHealth home page");
         return "medihealth";
     }
+    @GetMapping("/medihealth/patientDashboard/logout")
+    public String doLogout() {
+        log.info("logging out");
+        return "medihealth";
+    }
     @GetMapping("/medihealth/registerPatient")
     public String registerPatient(Model model) {
         Users newPatient = new Users();
@@ -65,7 +70,15 @@ public class PatientController {
     public String showPatientDashboard(Model model,@ModelAttribute("patient") Users patient){
         Users p=patientService.findByEmail(patient.getEmail());
         log.info(p.getEmail()+" logged in with id "+p.getId());
-        model.addAttribute("loggedpatient", p);
+        model.addAttribute("patient", p);//logged patient
+        return "patient_dashboard";
+    }
+
+    @GetMapping("/medihealth/patientDashboard")  //to redirect to this page
+    public String displayPatientDashboard(RedirectAttributes model,@ModelAttribute("patient") Users patient){
+        Users p=patientService.findByEmail(patient.getEmail());
+        log.info(p.getEmail()+" logged in with id "+p.getId());
+        model.addAttribute("patient", p);//logged patient
         return "patient_dashboard";
     }
 
@@ -102,7 +115,7 @@ public class PatientController {
         log.info(String.valueOf(appointmentService.findById(appointment.getId()).get().getPatientEmail()));
         //  model.addAttribute("appointments",appointmentService.findById(appointment.getId()).orElseThrow());
         //appointmentService.saveOrUpdate(appointment);
-        return "patient_dashboard";
+        return "redirect:/medihealth/patientDashboard";
 
     }
 }
