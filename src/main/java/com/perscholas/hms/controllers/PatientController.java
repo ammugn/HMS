@@ -38,7 +38,7 @@ public class PatientController {
         log.info("MediHealth home page");
         return "medihealth";
     }
-    @GetMapping("/medihealth/patientDashboard/logout")
+    @GetMapping("/medihealth/logout")
     public String doLogout() {
         log.info("logging out");
         return "medihealth";
@@ -66,19 +66,24 @@ public class PatientController {
         return "patient_login";
     }
 
-    @PostMapping("/medihealth/patientDashboard")  //"/medihealth/patientDashboard/{id}"
+
+    @PostMapping(value = {"/medihealth/patientDashboard","/medihealth/patientDashboard/{id}"})
     public String showPatientDashboard(Model model,@ModelAttribute("patient") Users patient){
+        log.info("in display patient dashboard landing page method");
         Users p=patientService.findByEmail(patient.getEmail());
         log.info(p.getEmail()+" logged in with id "+p.getId());
         model.addAttribute("patient", p);//logged patient
         return "patient_dashboard";
     }
 
-    @GetMapping("/medihealth/patientDashboard")  //to redirect to this page
-    public String displayPatientDashboard(RedirectAttributes model,@ModelAttribute("patient") Users patient){
+    @GetMapping(value = {"/medihealth/patientDashboard","/medihealth/patientDashboard/{id}"}) //to redirect to this page
+    public String displayPatientDashboard(Model model,@ModelAttribute("patient") Users patient){
+        log.info("in display patient dashboard redirect method");
+        log.info(" model attribute"+patient.getEmail());
         Users p=patientService.findByEmail(patient.getEmail());
+        log.info(" model"+patient.getEmail());
         log.info(p.getEmail()+" logged in with id "+p.getId());
-        model.addAttribute("patient", p);//logged patient
+         model.addAttribute("patient", p);//logged patient
         return "patient_dashboard";
     }
 

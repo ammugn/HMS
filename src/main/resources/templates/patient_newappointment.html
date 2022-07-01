@@ -9,15 +9,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/css/lib/themify-icons.css" rel="stylesheet">
-    <link href="/css/lib/owl.carousel.min.css" rel="stylesheet" />
-    <link href="/css/lib/owl.theme.default.min.css" rel="stylesheet" />
-    <link href="/css/lib/weather-icons.css" rel="stylesheet" />
+    <link href="/css/lib/owl.carousel.min.css" rel="stylesheet"/>
+    <link href="/css/lib/owl.theme.default.min.css" rel="stylesheet"/>
+    <link href="/css/lib/weather-icons.css" rel="stylesheet"/>
     <link href="/css/lib/menubar/sidebar.css" rel="stylesheet">
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/lib/helper.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
     <link href="/css/lib/datepicker/bootstrap-datepicker3.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!--    <link href="/css/mystyle.css" rel="stylesheet">-->
     <!--    <script src="/js/register.js"></script>-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
@@ -30,13 +31,15 @@
         <div class="nano-content">
             <ul>
                 <div class="logo">
-<!--                    <li>  <img src="/images/meditechlogo2.png" style="width:100px;height:100px"></a> </li>-->
+                    <!--                    <li>  <img src="/images/meditechlogo2.png" style="width:100px;height:100px"></a> </li>-->
                     <h2 class="logo">MediHealth</h2>
-                    <li><a th:href="@{/medihealth/patientDashboard}"><i class="ti-home"></i>Dashboard</a></li>
-                    <li><a th:object="${patient}" th:href="@{/medihealth/viewAppointments/{id}(id=${patient.id})}"><i class="ti-clock"></i> View Appoinments</a></li>
+                    <li><a th:href="@{/medihealth/patientDashboard/{id}(id=${patient.id})}"><i class="ti-home"></i>Dashboard</a></li>
+                    <li><a th:object="${patient}" th:href="@{/medihealth/viewAppointments/{id}(id=${patient.id})}"><i
+                            class="ti-clock"></i> View Appoinments</a></li>
                     <li><a th:href="@{/medihealth/patientDashboard}"><i class="ti-file"></i> Reports</a></li>
-                    <li><a th:href="@{/medihealth/bookAppointment/{id}(id=${patient.id})}"><i class="ti-credit-card"></i> Make New Appointment</a></li>
-                    <li><a th:href="@{/medihealth/patientDashboard/logout}"><i class="ti-close"></i>Logout</a></li>
+                    <li><a th:href="@{/medihealth/bookAppointment/{id}(id=${patient.id})}"><i
+                            class="ti-credit-card"></i> Make New Appointment</a></li>
+                    <li><a th:href="@{/medihealth/logout}"><i class="ti-close"></i>Logout</a></li>
                 </div>
             </ul>
         </div>
@@ -68,53 +71,58 @@
             </div>
 
 
-<section id="main-content">
+            <section id="main-content">
 
-    <div class="bootstrap-iso">
-<form th:action="@{/medihealth/saveorupdateappointment}" id="registerform" class="registerform" th:object="${appointments}"  method="POST">
+                <div class="bootstrap-iso">
+                    <form th:action="@{/medihealth/saveorupdateappointment}" id="registerform" class="registerform"
+                          th:object="${appointments}" method="POST">
 
-    <div class="form-outline mb-2">
-        <label for="name" class="col-lg-2 col-form-label">Name</label>
-        <input type="text" id="name" class="form-control col-lg-6" th:value="${patient.name}" disabled/>
-    </div>
-    <div class="form-outline mb-2">
-        <label for="email" class="col-lg-2 col-form-label">Your Email</label>
-        <input type="email" id="email" class="form-control col-lg-6" th:field="*{patientEmail}" required/>
-    </div>
-    <div class="form-outline mb-2">
-        <label for="issue" class="col-lg-2 col-form-label">Issue</label>
-        <input type="text" id="issue" class="form-control col-lg-6" th:field="*{issue}" required/>
-    </div>
-    <div class="form-outline mb-2">
-        <label for="date" class="col-lg-2 col-form-label">Appointment Date</label>
-        <div class="input-group date">
-        <input type="text" id="date" name="date" class="form-control col-lg-6"   th:field="*{appointmentDate}" required/>
-        <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
-        </div>
-    </div>
-    <div class="form-outline mb-2">
-        <label for="time" class="col-lg-2 col-form-label">Appointment Time</label>
-        <input type="time" id="time" class="form-control col-lg-6" th:field="*{appointmentTime}" min="09:00" max="17:00" required/><span>hours are from 9:00am to 5:00pm </span>
-    </div>
-    <div class="form-outline mb-2">
-        <label for="dname" class="col-lg-2 col-form-label">Select Doctor</label>
-        <select class="form-select col-lg-6" th:field="*{doctorEmail}">
-            <option th:name="dname" id="dname" th:each="d : ${doctors}" th:value="${d.email}" th:text="${d.name}" />
-        </select>
-    </div>
-    <p id="form-error"></p>
-    <div class="d-flex justify-content-center">
-        <button type="submit" value="Book Appointment" class="submit">Book Appointment</button>
-        <input type="hidden" th:field="*{id}" />
+                        <div class="form-outline mb-2">
+                            <label for="name" class="col-lg-2 col-form-label">Name</label>
+                            <input type="text" id="name" class="form-control col-lg-6" th:value="${patient.name}"
+                                   disabled/>
+                        </div>
+                        <div class="form-outline mb-2">
+                            <label for="email" class="col-lg-2 col-form-label">Your Email</label>
+                            <input type="email" id="email" class="form-control col-lg-6" th:field="*{patientEmail}"
+                                   required/>
+                        </div>
+                        <div class="form-outline mb-2">
+                            <label for="issue" class="col-lg-2 col-form-label">Issue</label>
+                            <input type="text" id="issue" class="form-control col-lg-6" th:field="*{issue}" required/>
+                        </div>
+                        <div class="form-outline mb-2">
+                            <label for="date" class="col-lg-2 col-form-label">Appointment Date</label>
+                            <div class="input-group date">
+                                <input type="text" id="date" name="date" class="form-control col-lg-6"
+                                       th:field="*{appointmentDate}" required/>
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                            </div>
+                        </div>
+                        <div class="form-outline mb-2">
+                            <label for="time" class="col-lg-2 col-form-label">Appointment Time</label>
+                            <input type="time" id="time" class="form-control col-lg-6" th:field="*{appointmentTime}"
+                                   min="09:00" max="17:00" required/><span>hours are from 9:00am to 5:00pm </span>
+                        </div>
+                        <div class="form-outline mb-2">
+                            <label for="dname" class="col-lg-2 col-form-label">Select Doctor</label>
+                            <select class="form-select col-lg-6" th:field="*{doctorEmail}">
+                                <option th:name="dname" id="dname" th:each="d : ${doctors}" th:value="${d.email}"
+                                        th:text="${d.name}"/>
+                            </select>
+                        </div>
+                        <p id="form-error"></p>
+                        <div class="d-flex justify-content-center">
+                            <button type="submit" value="Book Appointment" class="submit">Book Appointment</button>
+                            <input type="hidden" th:field="*{id}"/>
 
-    </div>
-</form>
-    </div>
-</section>
+                        </div>
+                    </form>
+                </div>
+            </section>
         </div>
     </div>
 </div>
-
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -158,6 +166,7 @@ $('.date').datepicker({
         autoclose: true,
         orientation: "bottom auto",
 });
+
 </script>
 
 </body>

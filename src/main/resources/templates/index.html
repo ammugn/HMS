@@ -4,75 +4,59 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>MediTech Login</title>
+    <title>🩺MediTech HMS</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="/css/mystyle.css" rel="stylesheet">
+    <script src="/js/register.js"></script>
 
-    <!-- ================= Favicon ================== -->
-    <!-- Standard -->
-    <link rel="shortcut icon" href="http://placehold.it/64.png/000/fff">
-    <!-- Retina iPad Touch Icon-->
-    <link rel="apple-touch-icon" sizes="144x144" href="http://placehold.it/144.png/000/fff">
-    <!-- Retina iPhone Touch Icon-->
-    <link rel="apple-touch-icon" sizes="114x114" href="http://placehold.it/114.png/000/fff">
-    <!-- Standard iPad Touch Icon-->
-    <link rel="apple-touch-icon" sizes="72x72" href="http://placehold.it/72.png/000/fff">
-    <!-- Standard iPhone Touch Icon-->
-    <link rel="apple-touch-icon" sizes="57x57" href="http://placehold.it/57.png/000/fff">
-
-    <!-- Styles -->
-    <link href="/css/lib/font-awesome.min.css" rel="stylesheet">
-    <link href="/css/lib/themify-icons.css" rel="stylesheet">
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/lib/helper.css" rel="stylesheet">
-    <link href="/css/style.css" rel="stylesheet">
 </head>
+<body>
+<section>
+    <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+        <div class="container h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                    <div class="card" style="border-radius: 15px;">
+                        <div class="card-body p-5">
 
-<body class="bg-primary">
+                            <h1 class="logo me-auto"><a href="#/medihealth.html">MediTech</a></h1>
+                            <h2 class="text-uppercase text-center mb-5" style="font-size: 1rem;">LOGIN</h2>
 
-<div class="unix-login">
-    <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="col-lg-6">
-                <div class="login-content">
-                    <div class="login-logo">
-                        <a href="index.html"> <img src="/images/meditechlogo1.png" style="width:200px;height:100px">
-                        <!--<span>MediTech</span>--></a>
-                    </div>
-                    <div class="login-form">
-                        <h4>Login</h4>
-                        <form action="dashboard.html">
-                            <div class="form-group">
-                                <label>Email address</label>
-                                <input type="email" id="email" class="form-control" placeholder="Email">
-                            </div>
-                            <div class="form-group">
-                                <label>Password</label>
-                                <input type="password" id="password" class="form-control" placeholder="Password">
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" id="admin" name="role">Admin
-                                </label>
-                                <label>
-                                    <input type="radio" id="doctor" name="role">Doctor
-                                </label>
-                                <label class="pull-right">
-                                    <a href="#">Forgotten Password?</a>
-                                </label>
+                            <form th:action="@{/dashboard}"  id="registerform" class="registerform"  onsubmit="validateForm()" method="POST">
 
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-flat m-b-30 m-t-30" onclick="Login()">Sign in</button>
 
-                            <div class="register-link m-t-15 text-center">
-                                <p>Don't have account ? <a href="#"> Sign Up Here</a></p>
-                            </div>
-                        </form>
+                                <div class="form-outline mb-2">
+
+                                    <label class="form-label">Email</label>
+                                    <input type="email" id="email" class="form-control"  required/>
+
+                                </div>
+
+                                <div class="form-outline mb-2">
+                                    <label class="form-label">Password</label>
+                                    <input id="password" type="password" class="form-control" pattern="[A-Za-z0-9]{8,}" title="Password must be atleast 8 characters" required/>
+                                </div>
+
+                                <p id="form-error"></p>
+                                <div class="d-flex justify-content-center">
+                                    <button type="submit" value="Login" class="submit">Login</button>
+                                </div>
+                                <div>
+                                    New user? <a id="signup"  th:href="@{/medihealth/registerAdminOrDoctor}" ><u>Sign up here</u>
+                                </a></div>
+
+
+                            </form>
+
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
+</section>
 </body>
-
 </html>

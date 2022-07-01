@@ -38,7 +38,7 @@
                     <li><a th:object="${patient}" th:href="@{/medihealth/viewAppointments/{id}(id=${patient.id})}"><i class="ti-clock"></i> View Appoinments</a></li>
                     <li><a th:href="@{/medihealth/patientDashboard}"><i class="ti-file"></i> Reports</a></li>
                     <li><a th:href="@{/medihealth/bookAppointment/{id}(id=${patient.id})}"><i class="ti-credit-card"></i> Make New Appointment</a></li>
-                    <li><a th:href="@{/medihealth/patientDashboard/logout}"><i class="ti-close"></i> Logout</a></li>
+                    <li><a th:href="@{/medihealth/logout}"><i class="ti-close"></i> Logout</a></li>
                 </div>
             </ul>
         </div>
@@ -53,7 +53,7 @@
                     <div class="col-lg-8 p-r-0 title-margin-right">
                         <div class="page-header">
                             <div class="page-title">
-                                <h1>Hello, <span th:text="${patient.name}"></span> Welcome to MediHealth!</h1>
+                                <h1>Hello, <span th:text="${patient.name}" th:remove="tag"></span> Welcome to MediHealth!</h1>
                             </div>
                         </div>
                     </div>
