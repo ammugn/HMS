@@ -13,6 +13,7 @@ import java.util.Set;
 //@AllArgsConstructor
 //@RequiredArgsConstructor
 @Entity
+@Table(name="users")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Users {
     @Id
@@ -41,12 +42,14 @@ public class Users {
         this.address = address;
     }
 
-
+//owning side
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH},fetch = FetchType.EAGER)
     @JoinTable(name = "users_appointments",
             joinColumns = @JoinColumn(name = "users_id"),
             inverseJoinColumns = @JoinColumn(name = "appointments_id"))
     private Set<Appointment> appointments = new LinkedHashSet<>();
+
+
 
     public void addAppointment(Appointment appointment){
         appointments.add(appointment);
@@ -57,4 +60,5 @@ public class Users {
         appointments.remove(appointment);
         appointment.setUsers(null);
     }
+
 }

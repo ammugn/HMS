@@ -176,21 +176,16 @@ public class AdminController {
     public String saveUpdateAppointment(RedirectAttributes model, @ModelAttribute("appointments") Appointment appointment) throws NoSuchElementException {
 
         appointmentService.saveOrUpdate(appointment);
-        // patientService.addAppointment(id,appointment);
         String patientEmail=appointment.getPatientEmail();
         log.info(patientEmail);
         String doctorEmail=appointment.getDoctorEmail();
         log.info(doctorEmail);
         Users p1=userService.findByEmail(patientEmail);
         model.addAttribute("patient", p1);
-        Users d1=userService.findByEmail(doctorEmail);
         userService.addAppointment(p1.getId(),appointment);
-     //   userService.addAppointment(d1.getId(),appointment);
-
+        appointmentService.saveOrUpdate(appointment);
         log.info("New Appointment added successfully");
         log.info(String.valueOf(appointmentService.findById(appointment.getId())));
-       //  model.addAttribute("appointments",appointmentService.findById(appointment.getId()).orElseThrow());
-        //appointmentService.saveOrUpdate(appointment);
         return "redirect:/appointments";
 
     }
@@ -207,8 +202,7 @@ public class AdminController {
         model.addAttribute("patient", p1);
         Users d1=userService.findByEmail(doctorEmail);
         userService.addAppointment(p1.getId(),appointment);
-        userService.addAppointment(d1.getId(),appointment);
-
+       // userService.addAppointment(d1.getId(),appointment);
         log.info("New Appointment added successfully");
 
         appointmentService.saveOrUpdate(appointment);

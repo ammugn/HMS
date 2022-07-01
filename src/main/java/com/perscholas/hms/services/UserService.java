@@ -20,17 +20,19 @@ import java.util.Optional;
  */
 @Service @Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+
 public class UserService {
     UserRepository userRepository;
     AppointmentRepository appointmentRepository;
 
     @Autowired
+
     public UserService(UserRepository patientRepository, AppointmentRepository appointmentRepository) {
         this.userRepository = patientRepository;
         this.appointmentRepository = appointmentRepository;
     }
 
-    public List<Users> findAll(){
+    public List<Users> findAllUsers(){
         return userRepository.findAll();
     }
     public List<Users> findAllPatients(){

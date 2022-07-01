@@ -91,7 +91,7 @@ public class PatientController {
         List<Users> listDoctors = patientService.findAllDoctors();
         model.addAttribute("doctors", listDoctors);
         log.info("New Appointment addition from patient dashboard");
-        return "patient-newappointment";
+        return "patient_newappointment";
 
 
     }
@@ -100,22 +100,30 @@ public class PatientController {
 
 
         appointmentService.saveOrUpdate(appointment);
-        // patientService.addAppointment(id,appointment);
         String patientEmail=appointment.getPatientEmail();
         log.info(patientEmail);
         String doctorEmail=appointment.getDoctorEmail();
         log.info(doctorEmail);
         Users p1=patientService.findByEmail(patientEmail);
         model.addAttribute("patient", p1);
-        Users d1=patientService.findByEmail(doctorEmail);
         patientService.addAppointment(p1.getId(),appointment);
-        //   userService.addAppointment(d1.getId(),appointment);
-
-        log.info("New Appointment added successfully");
+        log.info("New Appointment added successfully for");
         log.info(String.valueOf(appointmentService.findById(appointment.getId()).get().getPatientEmail()));
-        //  model.addAttribute("appointments",appointmentService.findById(appointment.getId()).orElseThrow());
-        //appointmentService.saveOrUpdate(appointment);
+
         return "redirect:/medihealth/patientDashboard";
+
+    }
+
+    @GetMapping("medihealth/viewAppointments/{id}")
+    public String viewAppointments(Model model,@PathVariable("id") long id){
+        Users patient=patientService.findById(id).orElseThrow();
+        log.info("Fetching Appointment list for "+patient.getEmail());
+        List<Appointment> appointments=appointmentService.getPatientAppointments(patient.getEmail());
+        model.addAttribute("appointments", appointments);
+        model.addAttribute("patient", patient);
+        log.info("Appointment list "+appointments.toString());
+        log.info("Appointment list for "+patient.getEmail()+" displayed");
+        return "patient_appointments";
 
     }
 }

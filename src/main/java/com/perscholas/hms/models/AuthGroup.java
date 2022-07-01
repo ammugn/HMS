@@ -18,6 +18,7 @@ import javax.persistence.*;
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
+@Table(name="authGroup")
 public class AuthGroup {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

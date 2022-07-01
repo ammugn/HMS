@@ -57,14 +57,14 @@ public class AppointmentService {
 
 }
 
-/*    public List<Appointment> getPatientAppointments(String name){
+    public List<Appointment> getPatientAppointments(String email){
 
-        return appointmentRepository.findPatientAppointments(name);
-    }*/
+        return appointmentRepository.findPatientAppointments(email);
+    }
     /*public List<Appointment> getDoctorAppointments(String name){
 
         return appointmentRepository.findDoctorAppointments(name);
-    }*/
-
+    }
+*/
 
 }
