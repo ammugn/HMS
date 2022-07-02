@@ -1,9 +1,11 @@
 package com.perscholas.hms.controllers;
 
-import com.perscholas.hms.services.DoctorService;
+import com.perscholas.hms.models.Users;
+import com.perscholas.hms.services.UserService;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -16,63 +18,18 @@ import org.springframework.web.bind.annotation.*;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequestMapping
 public class DoctorController {
-DoctorService doctorService;
+    UserService doctorService;
   @Autowired
-    public DoctorController(DoctorService doctorService) {
+    public DoctorController(UserService doctorService) {
         this.doctorService = doctorService;
     }
 
-   /* @GetMapping("/doctors")
-    public String getAllDoctors(Model model) {
-        log.info("Doctor list displayed");
-        model.addAttribute("doctors", doctorService.findAll());
-        return "doctors";
-    }
-    @GetMapping("/doctors/addNewDoctor")
-    public String addNewDoctor(Model model) {
-        Doctor doctor = new Doctor();
-        model.addAttribute("doctor", doctor);
-        List<String> listDepartments = Arrays.asList("Primary Physician", "Cardiology", "Orthopedic","Pediatric");
-        model.addAttribute("listDepartments", listDepartments);
-        log.info("New Doctor addition");
-        return "add-doctor";
-    }
-    @PostMapping("/doctors/saveorupdatedoctor")
-    public String saveUpdateDoctor(RedirectAttributes model, @ModelAttribute("doctor") Doctor doctor){
+    @PostMapping("/meditech/saveorupdatedoctor")
+    public String editProfile(@ModelAttribute("doctor")Users doctor){
         doctorService.saveOrUpdate(doctor);
-        log.info("New Doctor added successfully");
+        log.info("Doctor profile edited successfully");
         return "redirect:/doctors";
     }
 
-    @GetMapping("/doctors/edit/{id}")
-    public String showUpdateDoctorForm(@PathVariable("id") long id, Model model) {
-        Doctor doctor = doctorService.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid doctor Id:" + id));
 
-        model.addAttribute("doctor", doctor);
-        List<String> listDepartments = Arrays.asList("Primary Physician", "Cardiology", "Orthopedic","Pediatric");
-        model.addAttribute("listDepartments", listDepartments);
-        return "add-doctor";
-    }
-    @PostMapping("/doctors/update/{id}")
-    public String updateDoctor(@PathVariable("id") long id,
-                             BindingResult result, Model model) {
-        Doctor doctor = doctorService.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid doctor Id:" + id));
-        if (result.hasErrors()) {
-            doctor.setId(id);
-            return "add-doctor";
-        }
-
-        doctorService.saveOrUpdate(doctor);
-        return "redirect:/doctors";
-    }
-
-    @GetMapping("/doctors/delete/{id}")
-    public String deleteDoctor(@PathVariable("id") long id, Model model) {
-        Doctor doctor = doctorService.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid doctor Id:" + id));
-        doctorService.delete(doctor);
-        return "redirect:/doctors";
-    }*/
 }

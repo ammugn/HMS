@@ -10,24 +10,21 @@ import java.util.Set;
 
 @Getter @Setter
 @NoArgsConstructor
-//@AllArgsConstructor
+@AllArgsConstructor
 //@RequiredArgsConstructor
 @Entity
 @Table(name="users")
+@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String name;
-
     @Column(unique = true)
     String email;
-
     String password;
-
     String dob;
-
     String address;
 
     String insurance;

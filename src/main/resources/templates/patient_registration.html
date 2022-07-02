@@ -61,12 +61,6 @@
                 </div>
                 <div>
                   <label class="form-label">Insurance</label>
-               <!--   <select class="form-select" aria-label="Default select example">
-                    <option selected>Select Insurance</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>-->
                   <select class="form-select" th:field="*{insurance}">
                     <option th:each="i : ${listInsurance}" th:value="${i}" th:text="${i}" />
                   </select>

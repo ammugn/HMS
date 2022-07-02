@@ -3,8 +3,6 @@ package com.perscholas.hms.controllers;
 import com.perscholas.hms.models.Appointment;
 import com.perscholas.hms.models.Users;
 import com.perscholas.hms.services.AppointmentService;
-import com.perscholas.hms.services.DoctorService;
-import com.perscholas.hms.services.PatientService;
 import com.perscholas.hms.services.UserService;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -19,7 +17,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 /**
  * @author Ammu Nair
