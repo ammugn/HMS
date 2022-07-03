@@ -31,6 +31,8 @@ public class Users {
 
     String department;
 
+    Boolean isAdmin;
+
     public Users( String name,  String email, String password,  String dob,  String address) {
         this.name = name;
         this.email = email;
