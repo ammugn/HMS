@@ -1,7 +1,7 @@
 package com.perscholas.hms.services;
 
-import com.perscholas.hms.HmsApplication;
 import com.perscholas.hms.data.AppointmentRepository;
+import com.perscholas.hms.data.AuthGroupRepository;
 import com.perscholas.hms.data.UserRepository;
 import com.perscholas.hms.models.Users;
 import lombok.AccessLevel;
@@ -9,20 +9,10 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -50,11 +40,14 @@ class UserServicesTest {
     UserRepository userRepository;
     @Mock
     AppointmentRepository appointmentRepository;
+    @Mock
+    AuthGroupRepository authGroupRepository;
     private Users userTest;
 
     @BeforeEach
     void init() {
-        userService = new UserService(userRepository, appointmentRepository);
+
+        userService = new UserService(userRepository, appointmentRepository, authGroupRepository);
                 userTest = Users.builder()
                 .id(1L)
                 .name("Test User")

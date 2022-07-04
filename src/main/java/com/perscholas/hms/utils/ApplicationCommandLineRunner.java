@@ -1,8 +1,10 @@
 package com.perscholas.hms.utils;
 
 import com.perscholas.hms.data.AppointmentRepository;
+import com.perscholas.hms.data.AuthGroupRepository;
 import com.perscholas.hms.data.UserRepository;
 import com.perscholas.hms.models.Appointment;
+import com.perscholas.hms.models.AuthGroup;
 import com.perscholas.hms.models.Users;
 import com.perscholas.hms.services.AppointmentService;
 import com.perscholas.hms.services.UserService;
@@ -14,6 +16,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Ammu Nair
@@ -26,13 +30,15 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
    UserRepository userRepository;
     AppointmentService appointmentService;
     AppointmentRepository appointmentRepository;
+    AuthGroupRepository authGroupRepository;
 
     @Autowired
-    public ApplicationCommandLineRunner(UserService userService, UserRepository userRepository, AppointmentService appointmentService, AppointmentRepository appointmentRepository) {
+    public ApplicationCommandLineRunner(UserService userService, UserRepository userRepository, AppointmentService appointmentService, AppointmentRepository appointmentRepository, AuthGroupRepository authGroupRepository) {
         this.userService = userService;
         this.userRepository = userRepository;
         this.appointmentService = appointmentService;
         this.appointmentRepository = appointmentRepository;
+        this.authGroupRepository = authGroupRepository;
     }
 
 
@@ -43,26 +49,30 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
     }
     @Override
     public void run(String... args) throws Exception {
+
         //Populating Patient data
         Users patient1=new Users("Ammu Nair","ammugn@gmail.com", "password","1988-12-05","Mill Creek,WA");
         patient1.setInsurance("Aetna");
+        AuthGroup authGroup1=new AuthGroup("ammugn@gmail.com","ROLE_PATIENT");
         Users patient2=new Users("Emma Morgan","emma@gmail.com", "password","1999-05-20","Redmond,WA");
         patient2.setInsurance("Cigna");
+        AuthGroup authGroup2=new AuthGroup("emma@gmail.com","ROLE_PATIENT");
         Users patient3=new Users("John Doe","john@gmail.com", "password","1978-07-10","Bellevue,WA");
         patient3.setInsurance("United Health");
-
+        AuthGroup authGroup3=new AuthGroup("john@gmail.com","ROLE_PATIENT");
         Users doctor1=new Users("Gregory House","ghouse@gmail.com", "password","1968-03-05","Seattle,WA");
         doctor1.setDepartment("Primary Physician");
+        AuthGroup authGroup4=new AuthGroup("ghouse@gmail.com","ROLE_DOCTOR");
         Users doctor2=new Users("Meredith Grey","mgrey@gmail.com", "password","1982-05-05","Seattle,WA");
         doctor2.setDepartment("Cardiology");
+        AuthGroup authGroup5=new AuthGroup("mgrey@gmail.com","ROLE_DOCTOR");
         Users doctor3=new Users("Richard Webber","rwebber@gmail.com", "password","1959-11-22","Seattle,WA");
         doctor3.setDepartment("Orthopedic");
-        userRepository.save(patient1);
-        userRepository.save(patient2);
-        userRepository.save(patient3);
-        userRepository.save(doctor1);
-        userRepository.save(doctor2);
-        userRepository.save(doctor3);
+        AuthGroup authGroup6=new AuthGroup("rwebber@gmail.com","ROLE_DOCTOR");
+        List<Users> userList= Arrays.asList(patient1,patient2,patient3,doctor1,doctor2,doctor3);
+        userRepository.saveAll(userList);
+        List<AuthGroup> authGroupList= Arrays.asList(authGroup1,authGroup2,authGroup3,authGroup4,authGroup5,authGroup6);
+        authGroupRepository.saveAll(authGroupList);
 
 
         //Populating Appointment data
@@ -70,6 +80,8 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
         appointmentService.saveOrUpdate(appointment1);
         appointment1.addUsers(patient1);
         appointmentService.saveOrUpdate(appointment1);
+
+        log.info("User data populated from command line runner");
 
 
 

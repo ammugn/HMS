@@ -24,7 +24,7 @@ public class AuthGroup {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
     @NonNull
-    String aEmail;
+    String authEmail;
     @NonNull
     String role;
 

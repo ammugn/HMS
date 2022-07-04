@@ -1,6 +1,7 @@
 package com.perscholas.hms.controllers;
 
 import com.perscholas.hms.models.Users;
+import com.perscholas.hms.services.AppointmentService;
 import com.perscholas.hms.services.UserService;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -26,16 +27,20 @@ import java.util.List;
 public class HomeController {
 
     UserService userService;
+    AppointmentService appointmentService;
    @Autowired
-    public HomeController(UserService userService) {
+    public HomeController(UserService userService, AppointmentService appointmentService) {
         this.userService = userService;
-    }
+        this.appointmentService = appointmentService;
+   }
 
     @GetMapping(value = {"/dashboard"})
-    public String homePage(){
+    public String homePage(Model model){
+        model.addAttribute("appointments", appointmentService.findAll());
+        log.info("Meditech dashboard displayed");
         return "dashboard";
     }
-    @GetMapping(value = {"/", "index"})
+    @GetMapping(value = {"/", "/index"})
     public String mediTechLoginPage(){
         return "index";
     }
@@ -45,13 +50,17 @@ public class HomeController {
         model.addAttribute("listDepartments", listDepartments);
         Users newUser = new Users();
         model.addAttribute("user", newUser);
+        log.info("Admin/Doctor Registration page displayed");
         return "admin_doctor_registration";
     }
     @PostMapping("/meditech/saveUser")
     public String saveUser(@ModelAttribute("patient") Users user){
         userService.saveOrUpdate(user);
-       // if(user.getDepartment()!=null) to assign authGroup previlege
-        log.info("User registered sucessfully");
-        return "index.html";
+        log.info("Admin/Doctor user registered successfully");
+        return "index";
+    }
+    @GetMapping("/accessdenied")
+    public String accessDenied(){
+       return "accessdenied";
     }
 }

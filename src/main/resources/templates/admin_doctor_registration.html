@@ -63,7 +63,7 @@
                                 <div id="myRadioGroup" class="form-outline mb-2">
 
                                     Register as Admin<input type="radio" name="role" checked="checked" value="1" th:field="*{isAdmin}"/>
-                                    or Doctor<input type="radio" name="role" value="0" />
+                                    or Doctor<input type="radio" name="role" value="0" th:field="*{isAdmin}"/>
 
                                     <div id="adminDiv" class="desc">
                                         Admin Previleges Selected

@@ -1,12 +1,13 @@
 package com.perscholas.hms.services;
 import com.perscholas.hms.data.AppointmentRepository;
+import com.perscholas.hms.data.AuthGroupRepository;
 import com.perscholas.hms.data.UserRepository;
 import com.perscholas.hms.models.Appointment;
+import com.perscholas.hms.models.AuthGroup;
 import com.perscholas.hms.models.Users;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,12 +25,14 @@ import java.util.Optional;
 public class UserService {
     UserRepository userRepository;
     AppointmentRepository appointmentRepository;
+    AuthGroupRepository authGroupRepository;
 
     @Autowired
 
-    public UserService(UserRepository patientRepository, AppointmentRepository appointmentRepository) {
+    public UserService(UserRepository patientRepository, AppointmentRepository appointmentRepository, AuthGroupRepository authGroupRepository) {
         this.userRepository = patientRepository;
         this.appointmentRepository = appointmentRepository;
+        this.authGroupRepository = authGroupRepository;
     }
 
     public List<Users> findAllUsers(){
@@ -43,8 +46,23 @@ public class UserService {
     }
 
     public void saveOrUpdate(Users u){
+        AuthGroup authGroup=new AuthGroup();
         log.info(u.toString());
         userRepository.save(u);
+        authGroup.setAuthEmail(u.getEmail());
+        if(u.getIsAdmin()){
+            authGroup.setRole("ROLE_ADMIN");
+            log.info("Admin role assigned");
+        } else if (u.getInsurance()==null) {
+            authGroup.setRole("ROLE_DOCTOR");
+            log.info("Doctor role assigned");
+        }
+        else if (u.getDepartment()==null) {
+            authGroup.setRole("ROLE_PATIENT");
+            log.info("Patient role assigned");
+        }
+        authGroupRepository.save(authGroup);
+
 
     }
     public Optional<Users> findById(long id)
