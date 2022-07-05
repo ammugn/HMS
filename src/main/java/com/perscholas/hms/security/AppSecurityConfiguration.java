@@ -15,6 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -49,6 +50,11 @@ public class AppSecurityConfiguration extends WebSecurityConfigurerAdapter {
         return daoAuthenticationProvider;
     }
 
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return new AppAccessDeniedHandler();
+    }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
@@ -57,7 +63,7 @@ public class AppSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/assets/**", "/img/**");
+        web.ignoring().antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/assets/**", "/images/**");
 
     }
 
@@ -67,10 +73,10 @@ public class AppSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.
                 csrf().disable().
                 authorizeRequests().
-                antMatchers("/", "/index", "/medihealth", "/meditech", "/meditech/registerAdminOrDoctor","/medihealth/registerPatient","/medihealth/login","/meditech/saveUser").permitAll().
-                antMatchers("/medihealth/patientDashboard","/medihealth/saveorupdateappointment","/medihealth/bookAppointment/**").hasAnyAuthority("ROLE_PATIENT").
-                antMatchers("/patients","/dashboard","/patients/**","/doctors","/doctors/**").hasAnyAuthority("ROLE_ADMIN").
-                antMatchers("/meditech/**","/dashboard").hasAnyAuthority("ROLE_DOCTOR").
+                antMatchers("/", "/index", "/medihealth", "/meditech", "/meditech/registerAdminOrDoctor","/medihealth/registerPatient","/medihealth/login","/meditech/saveUser","/medihealth/patientDashboard").permitAll().
+                antMatchers("/patients","/dashboard","/patients/**","/doctors","/doctors/**","/appointments").hasAuthority("ROLE_ADMIN").
+                antMatchers("/dashboard","/appointments","/meditech/**").hasAuthority("ROLE_DOCTOR").
+                antMatchers("/medihealth/patientDashboard","/medihealth/saveorupdateappointment","/medihealth/bookAppointment/**").hasAuthority("ROLE_PATIENT").
                 anyRequest().authenticated().
                 and().
                 formLogin().loginPage("/index").usernameParameter("username").passwordParameter("password").loginProcessingUrl("/dashboard")

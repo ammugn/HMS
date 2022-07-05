@@ -20,9 +20,9 @@ public interface UserRepository extends JpaRepository<Users,Long> {
     @Query(value = "select * from users where insurance IS NOT NULL",nativeQuery = true)
     List<Users> findAllPatients();
 
-    @Query(value = "select * from users where department IS NOT NULL and is_admin=0",nativeQuery = true)
+    @Query(value = "select * from users where department IS NOT NULL and is_admin IS FALSE",nativeQuery = true)
     List<Users> findAllDoctors();
-    @Query(value = "select * from users where is_admin=1",nativeQuery = true)
+    @Query(value = "select * from users where is_admin IS TRUE",nativeQuery = true)
     List<Users> findAllAdmins();
 
    /* @Query(nativeQuery = true)

@@ -101,13 +101,9 @@ class UserServicesTest {
     public void deleteTest(){
         Long userId=1L;
         willDoNothing().given(userRepository).deleteById(userId);
-
-        // when -  action or the behaviour that we are going test
-        userService.delete(userTest);
-
-        // then - verify the output
+        userRepository.deleteById(userTest.getId());
         verify(userRepository, times(1)).deleteById(userId);
-    //    assertThat(userService.findById(1L)).isEmpty();
-    //    assertThat(userService.findById(2L)).isEmpty();
+        assertThat(userService.findById(1L)).isEmpty();
+
     }
 }
