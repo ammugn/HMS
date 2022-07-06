@@ -21,6 +21,7 @@ Thymeleaf<br>
 Mariadb Driver<br>
 Spring Data JPA<br>
 Validation<br>
+H2 Memory Database(testing)<br>
 
 ## Epics
 
