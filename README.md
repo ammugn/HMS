@@ -3,7 +3,7 @@ A Hospital Management System that has three user roles:Admin,Doctor and Patients
 
 ## Technologies
 
-Springboot<br>
+Springboot 2.7.1<br>
 Maven<br>
 Java corretto 11<br>
 Spring JPA<br>
