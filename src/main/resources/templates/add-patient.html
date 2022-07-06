@@ -36,7 +36,7 @@
     <h3>Add New Patient</h3>
     <hr/>
 
-    <form th:action="@{/patients/saveorupdatepatient}" th:object="${patient}" method="POST" enctype="multipart/form-data">
+    <form th:action="@{/meditech/patients/saveorupdatepatient}" th:object="${patient}" method="POST" enctype="multipart/form-data">
 
         <input style="width:600px" type="text" th:field="*{name}" class="form-control col-4 mb-4" placeholder="Name" />
 
@@ -56,7 +56,7 @@
 
     </form>
     <hr/>
-    <a th:href="@{/patients}">Back to list</a>
+    <a th:href="@{/meditech/patients}">Back to list</a>
             </section>
 
 

@@ -36,7 +36,7 @@
     <h3>Add New Doctor</h3>
     <hr/>
 
-    <form th:action="@{/doctors/saveorupdatedoctor}" th:object="${doctor}" method="POST">
+    <form th:action="@{/meditech/doctors/saveorupdatedoctor}" th:object="${doctor}" method="POST">
 
         <input style="width:500px" type="text" th:field="*{name}" class="form-control col-4 mb-4" placeholder="Name" />
 
@@ -52,7 +52,7 @@
 
     </form>
     <hr/>
-    <a th:href="@{/doctors}">Back to list</a>
+    <a th:href="@{/meditech/doctors}">Back to list</a>
     </section>
 
 

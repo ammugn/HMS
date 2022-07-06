@@ -39,7 +39,7 @@
     <h3>Add / Update Appointment</h3>
     <hr/>
     <div class="bootstrap-iso">
-    <form th:action="@{/appointments/saveorupdateappointment}" th:object="${appointments}" method="POST">
+    <form th:action="@{/meditech/appointments/saveorupdateappointment}" th:object="${appointments}" method="POST">
 
         <label for="pname" class="col-lg-2 col-form-label">Patient Name</label>
         <input  type="text"  th:value="${patient.name}" class="col-lg-6"  th:name="pname" id="pname" disabled/><br><br>
@@ -80,7 +80,7 @@
                 </div>
 
     <hr/>
-    <a th:href="@{/appointments}">Back to list</a>
+    <a th:href="@{/meditech/appointments}">Back to list</a>
             </section>
 
 

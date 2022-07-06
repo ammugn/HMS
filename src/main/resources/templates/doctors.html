@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
-  <title>vMediTech: Doctor Details</title>
+  <title>MediTech: Doctor Details</title>
 
   <!-- Head-->
   <div th:replace="fragrams/header :: header" />
@@ -51,8 +51,8 @@
       <td th:text="${doctor.email}"></td>
       <td th:text="${doctor.department}"></td>
       <td>
-       <a th:href="@{/doctors/edit/{id}(id=${doctor.id})}" class="btn btn-info">Update</a>
-        <a th:href="@{/doctors/delete/{id}(id=${doctor.id})}" class="btn btn-danger ml-2">Delete</a>
+       <a th:href="@{/meditech/doctors/edit/{id}(id=${doctor.id})}" class="btn btn-info">Update</a>
+        <a th:href="@{/meditech/doctors/delete/{id}(id=${doctor.id})}" class="btn btn-danger ml-2">Delete</a>
 
       </td>
     </tr>

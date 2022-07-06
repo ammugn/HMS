@@ -56,8 +56,8 @@
             <td th:text="${appointment.diagnosis}"></td>
             <td th:text="${appointment.isComplete}?'COMPLETE' : 'PENDING'"></td>
             <td>
-                <a th:href="@{/appointments/edit/{id}(id=${appointment.id})}" class="btn btn-info">Update</a>
-                <a th:href="@{/appointments/delete/{id}(id=${appointment.id})}" class="btn btn-danger ml-2">Delete</a>
+                <a th:href="@{/meditech/appointments/edit/{id}(id=${appointment.id})}" class="btn btn-info">Update</a>
+                <a th:href="@{/meditech/appointments/delete/{id}(id=${appointment.id})}" class="btn btn-danger ml-2">Delete</a>
 
             </td>
         </tr>

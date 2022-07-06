@@ -67,6 +67,7 @@ public class PatientController {
     }
 
 
+
     @PostMapping(value = {"/medihealth/patientDashboard","/medihealth/patientDashboard/{id}"})
     public String showPatientDashboard(Model model,@ModelAttribute("patient") Users patient){
         log.info("in display patient dashboard landing page method");
@@ -76,6 +77,7 @@ public class PatientController {
         return "patient_dashboard";
     }
 
+
     @GetMapping(value = {"/medihealth/patientDashboard","/medihealth/patientDashboard/{id}"}) //to redirect to this page
     public String displayPatientDashboard(Model model,@ModelAttribute("patient") Users patient){
         log.info("in display patient dashboard redirect method");
@@ -83,7 +85,7 @@ public class PatientController {
         Users p=patientService.findByEmail(patient.getEmail());
         log.info(" model"+patient.getEmail());
         log.info(p.getEmail()+" logged in with id "+p.getId());
-         model.addAttribute("patient", p);//logged patient
+        model.addAttribute("patient", p);//logged patient
         return "patient_dashboard";
     }
 
@@ -119,7 +121,7 @@ public class PatientController {
 
     }
 
-    @GetMapping("medihealth/viewAppointments/{id}")
+    @GetMapping("/medihealth/viewAppointments/{id}")
     public String viewAppointments(Model model,@PathVariable("id") long id){
         Users patient=patientService.findById(id).orElseThrow();
         log.info("Fetching Appointment list for "+patient.getEmail());

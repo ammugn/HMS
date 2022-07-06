@@ -34,7 +34,7 @@ public class HomeController {
         this.appointmentService = appointmentService;
    }
 
-    @GetMapping(value = {"/dashboard"})
+    @GetMapping(value = {"/meditech/dashboard"})
     public String homePage(Model model){
         model.addAttribute("appointments", appointmentService.findAll());
         log.info("Meditech dashboard displayed");
@@ -42,7 +42,8 @@ public class HomeController {
     }
     @GetMapping(value = {"/", "/index"})
     public String mediTechLoginPage(){
-        return "index";
+
+       return "index";
     }
     @GetMapping(value ={ "/meditech/registerAdminOrDoctor"})
     public String mediTechEmployeeRegistration(Model model){
@@ -61,6 +62,8 @@ public class HomeController {
     }
     @GetMapping("/accessdenied")
     public String accessDenied(){
+
+        log.info("Admin/Doctor access denied");
        return "accessdenied";
     }
 }

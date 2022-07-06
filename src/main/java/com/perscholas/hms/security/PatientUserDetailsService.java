@@ -22,11 +22,11 @@ import java.util.NoSuchElementException;
 @Service
 @Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
-public class AppUserDetailsService implements UserDetailsService {
+public class PatientUserDetailsService implements UserDetailsService {
     AuthGroupRepository authGroupRepository;
     UserService userService;
     @Autowired
-    public AppUserDetailsService(AuthGroupRepository authGroupRepository, UserService userService) {
+    public PatientUserDetailsService(AuthGroupRepository authGroupRepository, UserService userService) {
         this.authGroupRepository = authGroupRepository;
         this.userService = userService;
     }
@@ -45,7 +45,7 @@ public class AppUserDetailsService implements UserDetailsService {
             e.printStackTrace();
         }
         List<AuthGroup> authGroups = authGroupRepository.findByAuthEmail(username);
-        log.info("User is "+user.getName()+" With role "+authGroups.get(0).getRole());
+        log.info("Patient is "+user.getName()+" With role "+authGroups.get(0).getRole());
         return new AppUserPrincipal(user, authGroups);
     }
 }

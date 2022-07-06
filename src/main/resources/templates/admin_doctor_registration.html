@@ -22,7 +22,8 @@
                 <div class="col-12 col-md-9 col-lg-7 col-xl-6">
                     <div class="card" style="border-radius: 15px;">
                         <div class="card-body p-5">
-                            <h1 class="logo" style="font-size: 2rem;">MediHealth</h1>
+                            <img src="/images/4.png" style="display:block;width:200px;height:200px;margin-left:auto;margin-right:auto;">
+<!--                            <h1 class="logo" style="font-size: 2rem;">MediHealth</h1>-->
                             <h2 class="text-uppercase text-center mb-5" style="font-size: 1rem;">Create an account</h2>
 
                             <form th:action="@{/meditech/saveUser}" id="registerform" class="registerform" th:object="${user}" onsubmit="validateForm()" method="POST">
@@ -81,7 +82,7 @@
                                     <!--                  <input type="hidden" th:field="*{id}" />-->
 
                                 </div>
-                                Already have an account? <a id="register" class="register" thref="@{/}"><u>Login here</u></a></p>
+                                Already have an account? <a id="register" class="register" th:href="@{/}"><u>Login here</u></a></p>
 
                             </form>
 

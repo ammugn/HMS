@@ -37,13 +37,13 @@ public class AdminController {
     }
 
 
-    @GetMapping("/patients")
+    @GetMapping("/meditech/patients")
     public String getAllPatients(Model model) {
         log.info("Patient list displayed");
         model.addAttribute("patients", userService.findAllPatients());
         return "patients";
     }
-    @GetMapping("/patients/addNewPatient")
+    @GetMapping("/meditech/patients/addNewPatient")
     public String addNewPatient(Model model) {
         Users newPatient = new Users();
         model.addAttribute("patient", newPatient);
@@ -52,15 +52,15 @@ public class AdminController {
         log.info("New Patient addition");
         return "add-patient";
     }
-    @PostMapping("/patients/saveorupdatepatient")
+    @PostMapping("/meditech/patients/saveorupdatepatient")
     public String saveUpdatePatient(RedirectAttributes model, @ModelAttribute("patient") Users patient){
         userService.saveOrUpdate(patient);
         log.info("New Patient added successfully");
-        return "redirect:/patients";
+        return "redirect:/meditech/patients";
 
     }
 
-    @GetMapping("/patients/edit/{id}")
+    @GetMapping("/meditech/patients/edit/{id}")
     public String showUpdateForm(@PathVariable("id") long id, Model model) {
         Users patient = userService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid patient Id:" + id));
@@ -68,9 +68,10 @@ public class AdminController {
         model.addAttribute("patient", patient);
         List<String> listInsurance = Arrays.asList("United Health","Aetna","Cigna");
         model.addAttribute("listInsurance", listInsurance);
+        log.info("Patient edit page");
         return "add-patient";
     }
-    @PostMapping("/patients/update/{id}")
+    @PostMapping("/meditech/patients/update/{id}")
     public String updateUser(@PathVariable("id") long id,
                              BindingResult result, Model model) {
         Users patient = userService.findById(id)
@@ -81,27 +82,29 @@ public class AdminController {
         }
 
         userService.saveOrUpdate(patient);
-        return "redirect:/patients";
+        log.info("Patient details updated");
+        return "redirect:/meditech/patients";
     }
 
-    @GetMapping("/patients/delete/{id}")
+    @GetMapping("/meditech/patients/delete/{id}")
     public String deletePatient(@PathVariable("id") long id, Model model) {
         Users patient = userService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid patient Id:" + id));
         userService.delete(patient);
-        return "redirect:/patients";
+        log.info("Patient deleted successfully");
+        return "redirect:/meditech/patients";
     }
 
 
     /***** Admin controllers for Doctors *******/
-    @GetMapping("/doctors")
+    @GetMapping("/meditech/doctors")
     public String getAllDoctors(Model model) {
         log.info("Doctor list displayed");
         model.addAttribute("doctors", userService.findAllDoctors());
         return "doctors";
     }
 
-    @GetMapping("/doctors/addNewDoctor")
+    @GetMapping("/meditech/doctors/addNewDoctor")
     public String addNewDoctor(Model model) {
         Users doctor = new Users();
         model.addAttribute("doctor", doctor);
@@ -111,14 +114,14 @@ public class AdminController {
         return "add-doctor";
     }
 
-    @PostMapping("/doctors/saveorupdatedoctor")
+    @PostMapping("/meditech/doctors/saveorupdatedoctor")
     public String saveUpdateDoctor(RedirectAttributes model, @ModelAttribute("doctor") Users doctor){
         userService.saveOrUpdate(doctor);
         log.info("New Doctor added successfully");
-        return "redirect:/doctors";
+        return "redirect:/meditech/doctors";
     }
 
-    @GetMapping("/doctors/edit/{id}")
+    @GetMapping("/meditech/doctors/edit/{id}")
     public String showUpdateDoctorForm(@PathVariable("id") long id, Model model) {
         Users doctor = userService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid doctor Id:" + id));
@@ -130,18 +133,18 @@ public class AdminController {
         return "add-doctor";
     }
 
-    @GetMapping("/doctors/delete/{id}")
+    @GetMapping("/meditech/doctors/delete/{id}")
     public String deleteDoctor(@PathVariable("id") long id, Model model) {
         Users doctor = userService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid doctor Id:" + id));
         userService.delete(doctor);
-        return "redirect:/doctors";
+        return "redirect:/meditech/doctors";
     }
 
 
     /*****Admin controllers for Appointments*******/
 
-    @GetMapping("/appointments")
+    @GetMapping("/meditech/appointments")
     public String getAllAppointments(Model model) {
         log.info("Appointment list displayed");
         model.addAttribute("appointments", appointmentService.findAll());
@@ -157,7 +160,7 @@ public class AdminController {
 //        log.info("New Appointment addition");
 //        return "add-appointments";
 //    }
-    @GetMapping("/appointments/addNewAppointment/{id}")
+    @GetMapping("/meditech/appointments/addNewAppointment/{id}")
     public String makeAppointment(@PathVariable("id") long id,Model model,RedirectAttributes redirect) {
         Appointment appointment = new Appointment();
         model.addAttribute("appointments", appointment);
@@ -169,7 +172,7 @@ public class AdminController {
         return "add-appointments";
     }
 
-    @PostMapping("/appointments/saveorupdateappointment")
+    @PostMapping("/meditech/appointments/saveorupdateappointment")
     public String saveUpdateAppointment(RedirectAttributes model, @ModelAttribute("appointments") Appointment appointment) throws NoSuchElementException {
 
         appointmentService.saveOrUpdate(appointment);
@@ -183,12 +186,12 @@ public class AdminController {
         appointmentService.saveOrUpdate(appointment);
         log.info("New Appointment added successfully");
         log.info(String.valueOf(appointmentService.findById(appointment.getId())));
-        return "redirect:/appointments";
+        return "redirect:/meditech/appointments";
 
     }
 
     //saveorupdateappointment/{id} not used
-    @PostMapping("/appointments/saveorupdateappointment/{id}")
+    @PostMapping("/meditech/appointments/saveorupdateappointment/{id}")
     public String saveAppointment(@PathVariable("id") long id,@ModelAttribute("patientId") Object flashAttribute, @ModelAttribute("appointments") Appointment appointment,RedirectAttributes model) throws NoSuchElementException{
         appointmentService.saveOrUpdate(appointment);
         String patientEmail=appointment.getPatientEmail();
@@ -203,11 +206,11 @@ public class AdminController {
         log.info("New Appointment added successfully");
 
         appointmentService.saveOrUpdate(appointment);
-        return "redirect:/appointments";
+        return "redirect:/meditech/appointments";
     }
 
 
-    @GetMapping("/appointments/edit/{id}")
+    @GetMapping("/meditech/appointments/edit/{id}")
     public String showUpdateAppointmentForm(@PathVariable("id") long id, Model model) {
         Appointment appointment = appointmentService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid appointment Id:" + id));
@@ -234,7 +237,7 @@ public class AdminController {
         return "redirect:/appointments";
     }*/
 
-    @GetMapping("/appointments/delete/{id}")
+    @GetMapping("/meditech/appointments/delete/{id}")
     public String deleteAppointments(@PathVariable("id") long id, Model model) {
         Appointment appointment = appointmentService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid appoinment Id:" + id));
@@ -246,7 +249,7 @@ public class AdminController {
         userService.removeAppointment(d1.getId(), appointment);*/
          appointmentService.delete(appointment);
 
-        return "redirect:/appointments";
+        return "redirect:/meditech/appointments";
 
 
 

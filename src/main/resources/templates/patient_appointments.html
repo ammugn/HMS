@@ -32,7 +32,7 @@
                 <div class="logo">
                     <li><img src="/images/meditechlogo2.png" style="width:100px;height:100px"></a> </li>
                     <h2 class="logo">MediHealth</h2>
-                    <li><a th:href="@{/medihealth/patientDashboard/{id}(id=${patient.id})}"><i class="ti-home"></i>Dashboard</a></li>
+                    <li><a th:href="@{/medihealth/patientDashboard}"><i class="ti-home"></i>Dashboard</a></li>
                     <li><a th:object="${patient}" th:href="@{/medihealth/viewAppointments/{id}(id=${patient.id})}"><i
                             class="ti-clock"></i> View Appoinments</a></li>
                     <li><a th:href="@{/medihealth/patientDashboard}"><i class="ti-file"></i> Reports</a></li>

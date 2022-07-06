@@ -56,16 +56,16 @@
                         <td th:text="${patient.insurance}"></td>
                         <td th:text="${patient.address}"></td>
                         <td>
-                            <a th:href="@{/patients/edit/{id}(id=${patient.id})}" class="btn btn-info">Update</a>
-                            <a th:href="@{/patients/delete/{id}(id=${patient.id})}" class="btn btn-danger ml-2">Delete</a>
-                            <a th:href="@{/appointments/addNewAppointment/{id}(id=${patient.id})}" class="btn btn-danger ml-2">Make Appointment</a>
+                            <a th:href="@{/meditech/patients/edit/{id}(id=${patient.id})}" class="btn btn-info">Update</a>
+                            <a th:href="@{/meditech/patients/delete/{id}(id=${patient.id})}" class="btn btn-danger ml-2">Delete</a>
+                            <a th:href="@{/meditech/appointments/addNewAppointment/{id}(id=${patient.id})}" class="btn btn-danger ml-2">Make Appointment</a>
 
                         </td>
                     </tr>
 
                     </tbody>
                 </table>
-            <a th:href="@{/patients/addNewPatient}" class="btn btn-primary">Add Patient</a>
+            <a th:href="@{/meditech/patients/addNewPatient}" class="btn btn-primary">Add Patient</a>
                 <br/><br/>
             </section>
 

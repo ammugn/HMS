@@ -2,9 +2,11 @@ package com.perscholas.hms.security;
 
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -22,10 +24,12 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 /**
  * @author Ammu Nair
  */
+@Slf4j
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Order(1)
 public class AppSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     AppUserDetailsService appUserDetailsService;
@@ -69,14 +73,15 @@ public class AppSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        log.info("In App security configuration");
 
-        http.
+      /*  http.
                 csrf().disable().
                 authorizeRequests().
-                antMatchers("/", "/index", "/medihealth", "/meditech", "/meditech/registerAdminOrDoctor","/medihealth/registerPatient","/medihealth/login","/meditech/saveUser","/medihealth/patientDashboard").permitAll().
-                antMatchers("/patients","/dashboard","/patients/**","/doctors","/doctors/**","/appointments").hasAuthority("ROLE_ADMIN").
-                antMatchers("/dashboard","/appointments","/meditech/**").hasAuthority("ROLE_DOCTOR").
-                antMatchers("/medihealth/patientDashboard","/medihealth/saveorupdateappointment","/medihealth/bookAppointment/**").hasAuthority("ROLE_PATIENT").
+               // antMatchers("/", "/index", "/medihealth", "/meditech", "/meditech/registerAdminOrDoctor","/medihealth/registerPatient","/medihealth/login","/meditech/saveUser","/medihealth/patientDashboard").permitAll().
+                       antMatchers("/", "/index","/meditech", "/meditech/registerAdminOrDoctor","/meditech/saveUser").permitAll().
+                       antMatchers("/patients","/dashboard","/patients/**","/doctors","/doctors/**","/appointments").hasAuthority("ROLE_ADMIN").
+                antMatchers("/dashboard","/appointments").hasAuthority("ROLE_DOCTOR").
                 anyRequest().authenticated().
                 and().
                 formLogin().loginPage("/index").usernameParameter("username").passwordParameter("password").loginProcessingUrl("/dashboard")
@@ -86,7 +91,25 @@ public class AppSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 logout().invalidateHttpSession(true).clearAuthentication(true).logoutRequestMatcher(new AntPathRequestMatcher("/logout")).
                 logoutSuccessUrl("/").permitAll().and().exceptionHandling().accessDeniedPage("/accessdenied");
 
+*/
 
+        http
+                .authorizeRequests().
+                antMatchers("/", "/index", "/medihealth", "/meditech", "/meditech/registerAdminOrDoctor","/medihealth/registerPatient","/medihealth/login","/meditech/saveUser","/medihealth/login","/medihealth/savePatient","/meditech/dashboard").permitAll();
+        http
+                .authorizeRequests().
+                antMatchers("/meditech/**").hasAuthority("ROLE_ADMIN").
+                antMatchers("/meditech/dashboard","/meditech/appointments","/meditech/logout").hasAuthority("ROLE_DOCTOR").
+                anyRequest().authenticated()
+                .and().formLogin().loginPage("/index").usernameParameter("username").passwordParameter("password").loginProcessingUrl("/meditech/dashboard")
+                .defaultSuccessUrl("/meditech/dashboard", true)
+                .failureUrl("/accessdenied")
+                .permitAll()
+                .and().logout().invalidateHttpSession(true).clearAuthentication(true).logoutRequestMatcher(new AntPathRequestMatcher("meditech/logout")).
+                logoutSuccessUrl("/").permitAll().and().exceptionHandling().accessDeniedPage("/accessdenied");
+        http.csrf().disable();
+
+//"/meditech/patients","/meditech/dashboard","/meditech/patients/**","/meditech/doctors","/meditech/doctors/**","/meditech/appointments","meditech/logout
 
 
 
