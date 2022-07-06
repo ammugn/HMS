@@ -10,7 +10,9 @@ Spring JPA<br>
 MariaDB<br>
 Spring Security<br>
 Thymeleaf<br>
-<br><br>
+HTML,CSS,Bootstrap,JQuery<br>
+JUnit<br>
+
 
 ## Dependencies
 Spring web<br>
